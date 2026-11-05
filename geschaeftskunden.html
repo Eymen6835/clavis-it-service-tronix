@@ -14,7 +14,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/styles.css?v=2">
+  <link rel="stylesheet" href="assets/css/styles.css?v=6">
   <script>
     (function(){try{var t=localStorage.getItem('clavis-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </script>
@@ -345,7 +345,7 @@
               <span class="price-big">ab 249 €</span>
               <span class="price-unit">netto im Monat</span>
             </div>
-            <p>Ein Arbeitsplatz liegt bei 249 € netto im Monat; bei mehreren Mitarbeitenden sinkt der Durchschnittspreis je Platz schrittweise (3 Arbeitsplätze: 689 €, 5 Arbeitsplätze: 1.099 €, 10 Arbeitsplätze: 1.999 €). Ein Arbeitsplatz ist ein Mitarbeiter mit seinem Computer oder Notebook. Server, Netzwerk und weitere Geräte kommen je nach Bedarf dazu; den Betrag stellen Sie unten für Ihren Betrieb zusammen. Zzgl. 19 % USt. Drei Stunden sind inklusive. Was über die drei Stunden hinausgeht, berechne ich mit 49 € netto pro Stunde. Der Vertrag läuft mindestens drei Monate, danach ist er monatlich kündbar.</p>
+            <p>1 Platz liegt bei 249 € netto im Monat; bei mehreren Mitarbeitenden sinkt der Preis pro Platz mit Mengenrabatt auf bis zu 189 € pro Platz (rund 24 % Rabatt ab 10 Plätzen). Ein Arbeitsplatz ist ein Mitarbeiter mit seinem Computer oder Notebook. Server, Netzwerk und weitere Geräte kommen je nach Bedarf dazu; den Betrag stellen Sie unten für Ihren Betrieb zusammen. Zzgl. 19 % USt. Drei Stunden sind inklusive. Was über die drei Stunden hinausgeht, berechne ich mit 49 € netto pro Stunde. Der Vertrag läuft mindestens drei Monate, danach ist er monatlich kündbar.</p>
 
             <div class="action-row" style="margin-top: 1.4rem; margin-bottom: 1.4rem;">
               <a class="btn btn--primary" href="#rechner">Vertrag berechnen</a>
@@ -368,28 +368,31 @@
             <div class="row-table">
               <div class="row-item">
                 <div>
-                  <div class="row-item-title">1 Arbeitsplatz</div>
+                  <div class="row-item-title">1 Platz</div>
                   <div class="row-item-sub">Zum Beispiel für Selbstständige im Büro oder Homeoffice</div>
                 </div>
                 <div class="row-item-value">249 €</div>
               </div>
               <div class="row-item">
                 <div>
-                  <div class="row-item-title">3 Arbeitsplätze</div>
+                  <div class="row-item-title">3 Plätze</div>
+                  <div class="row-item-sub">230 € pro Platz <span class="discount-pill">rund 8 % Rabatt</span></div>
                 </div>
-                <div class="row-item-value">689 €</div>
+                <div class="row-item-value">690 €</div>
               </div>
               <div class="row-item">
                 <div>
-                  <div class="row-item-title">5 Arbeitsplätze</div>
+                  <div class="row-item-title">5 Plätze</div>
+                  <div class="row-item-sub">210 € pro Platz <span class="discount-pill">rund 16 % Rabatt</span></div>
                 </div>
-                <div class="row-item-value">1.099 €</div>
+                <div class="row-item-value">1.050 €</div>
               </div>
               <div class="row-item">
                 <div>
-                  <div class="row-item-title">10 Arbeitsplätze</div>
+                  <div class="row-item-title">10 Plätze</div>
+                  <div class="row-item-sub">189 € pro Platz <span class="discount-pill">rund 24 % Rabatt</span></div>
                 </div>
-                <div class="row-item-value">1.999 €</div>
+                <div class="row-item-value">1.890 €</div>
               </div>
             </div>
 
@@ -418,7 +421,7 @@
             <div class="calc-row" data-calc-row data-workplace-tier="true" data-default="1" data-label="Arbeitsplätze">
               <div>
                 <div class="calc-label">Arbeitsplätze</div>
-                <div class="calc-desc">Ein Mitarbeiter mit Computer oder Notebook · 1 Platz: 249 € · 3 Plätze: 689 € · 5 Plätze: 1.099 € · 10 Plätze: 1.999 €</div>
+                <div class="calc-desc" data-workplace-desc>Ein Mitarbeiter mit Computer oder Notebook · 249 € pro Platz (ab 3 Plätzen: 230 € · ab 5 Plätzen: 210 € · ab 10 Plätzen: 189 €)</div>
               </div>
               <div class="calc-stepper">
                 <button class="calc-btn" type="button" data-calc-dec aria-label="Arbeitsplätze verringern" disabled>−</button>
@@ -795,6 +798,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <script src="assets/js/main.js?v=5" defer></script>
+  <script src="assets/js/main.js?v=6" defer></script>
 </body>
 </html>

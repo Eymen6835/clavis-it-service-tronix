@@ -193,21 +193,21 @@
     const WORKPLACE_TIERS = {
       0: 0,
       1: 249,
-      2: 469,
-      3: 689,
-      4: 899,
-      5: 1099,
-      6: 1279,
-      7: 1459,
-      8: 1639,
-      9: 1819,
-      10: 1999,
+      2: 480,
+      3: 690,
+      4: 880,
+      5: 1050,
+      6: 1218,
+      7: 1386,
+      8: 1552,
+      9: 1719,
+      10: 1890,
     };
 
     const calcWorkplaceTotal = (qty) => {
       if (qty <= 0) return 0;
       if (WORKPLACE_TIERS[qty] !== undefined) return WORKPLACE_TIERS[qty];
-      return 1999 + (qty - 10) * 180;
+      return qty * 189;
     };
 
     const updateCalculator = () => {
@@ -221,6 +221,7 @@
         const input = row.querySelector('.calc-input');
         const decBtn = row.querySelector('[data-calc-dec]');
         const lineOut = row.querySelector('[data-calc-subtotal]');
+        const workplaceDesc = row.querySelector('[data-workplace-desc]');
 
         const minQty = parseInt(input.min, 10) || 0;
         let qty = parseInt(input.value, 10);
@@ -236,9 +237,27 @@
         if (lineOut) {
           lineOut.textContent = `${fmt.format(lineTotal)} €`;
         }
+        if (isWorkplaceTier && workplaceDesc) {
+          if (qty <= 1) {
+            workplaceDesc.textContent =
+              'Ein Mitarbeiter mit Computer oder Notebook · 249 € pro Platz (ab 2 Plätzen Mengenrabatt bis 24 %)';
+          } else {
+            const perSeat = Math.round(lineTotal / qty);
+            const discountPct = Math.round((1 - perSeat / 249) * 100);
+            workplaceDesc.innerHTML = `${perSeat} € pro Platz <span class="discount-pill">rund ${discountPct} % Rabatt</span>`;
+          }
+        }
         if (qty > 0) {
-          const itemLabel = isWorkplaceTier && qty === 1 ? 'Arbeitsplatz' : label;
-          selectedLines.push(`- ${qty}x ${itemLabel}: ${fmt.format(lineTotal)} € netto`);
+          if (isWorkplaceTier && qty > 1) {
+            const perSeat = Math.round(lineTotal / qty);
+            const discountPct = Math.round((1 - perSeat / 249) * 100);
+            selectedLines.push(
+              `- ${qty}x ${label} (${perSeat} € pro Platz, rund ${discountPct} % Rabatt): ${fmt.format(lineTotal)} € netto`
+            );
+          } else {
+            const itemLabel = isWorkplaceTier && qty === 1 ? 'Arbeitsplatz' : label;
+            selectedLines.push(`- ${qty}x ${itemLabel}: ${fmt.format(lineTotal)} € netto`);
+          }
         }
       });
 

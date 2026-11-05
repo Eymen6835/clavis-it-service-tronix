@@ -1982,6 +1982,28 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   margin-top: 0.15rem;
 }
 
+.discount-pill {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.12rem 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--whatsapp-soft);
+  color: var(--whatsapp-text);
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .discount-pill {
+    background: rgba(74, 222, 128, 0.15);
+  }
+}
+:root[data-theme="dark"] .discount-pill {
+  background: rgba(74, 222, 128, 0.15);
+}
+
 .row-item-value {
   font-family: var(--font-display);
   font-weight: 700;
