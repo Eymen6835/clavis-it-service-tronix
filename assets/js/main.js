@@ -190,11 +190,32 @@
     const resetBtn = document.getElementById('calc-reset');
     const inquiryLink = document.getElementById('calc-inquiry');
 
+    const WORKPLACE_TIERS = {
+      0: 0,
+      1: 249,
+      2: 469,
+      3: 689,
+      4: 899,
+      5: 1099,
+      6: 1279,
+      7: 1459,
+      8: 1639,
+      9: 1819,
+      10: 1999,
+    };
+
+    const calcWorkplaceTotal = (qty) => {
+      if (qty <= 0) return 0;
+      if (WORKPLACE_TIERS[qty] !== undefined) return WORKPLACE_TIERS[qty];
+      return 1999 + (qty - 10) * 180;
+    };
+
     const updateCalculator = () => {
       let rawSum = 0;
       const selectedLines = [];
 
       rows.forEach((row) => {
+        const isWorkplaceTier = row.dataset.workplaceTier === 'true';
         const unitPrice = parseFloat(row.dataset.price || '0');
         const label = row.dataset.label || '';
         const input = row.querySelector('.calc-input');
@@ -209,14 +230,15 @@
 
         if (decBtn) decBtn.disabled = qty <= minQty;
 
-        const lineTotal = qty * unitPrice;
+        const lineTotal = isWorkplaceTier ? calcWorkplaceTotal(qty) : qty * unitPrice;
         rawSum += lineTotal;
 
         if (lineOut) {
           lineOut.textContent = `${fmt.format(lineTotal)} €`;
         }
         if (qty > 0) {
-          selectedLines.push(`- ${qty}x ${label}: ${fmt.format(lineTotal)} € netto`);
+          const itemLabel = isWorkplaceTier && qty === 1 ? 'Arbeitsplatz' : label;
+          selectedLines.push(`- ${qty}x ${itemLabel}: ${fmt.format(lineTotal)} € netto`);
         }
       });
 

@@ -345,7 +345,7 @@
               <span class="price-big">ab 249 €</span>
               <span class="price-unit">netto im Monat</span>
             </div>
-            <p>Der Preis liegt bei 199 € je Arbeitsplatz und Monat, der Mindestbetrag bei 249 €. Ein Arbeitsplatz ist ein Mitarbeiter mit seinem Computer oder Notebook. Server, Netzwerk und weitere Geräte kommen je nach Bedarf dazu; den Betrag stellen Sie unten für Ihren Betrieb zusammen. Zzgl. 19 % USt. Drei Stunden sind inklusive. Was über die drei Stunden hinausgeht, berechne ich mit 49 € netto pro Stunde. Der Vertrag läuft mindestens drei Monate, danach ist er monatlich kündbar.</p>
+            <p>Ein Arbeitsplatz liegt bei 249 € netto im Monat; bei mehreren Mitarbeitenden sinkt der Durchschnittspreis je Platz schrittweise (3 Arbeitsplätze: 689 €, 5 Arbeitsplätze: 1.099 €, 10 Arbeitsplätze: 1.999 €). Ein Arbeitsplatz ist ein Mitarbeiter mit seinem Computer oder Notebook. Server, Netzwerk und weitere Geräte kommen je nach Bedarf dazu; den Betrag stellen Sie unten für Ihren Betrieb zusammen. Zzgl. 19 % USt. Drei Stunden sind inklusive. Was über die drei Stunden hinausgeht, berechne ich mit 49 € netto pro Stunde. Der Vertrag läuft mindestens drei Monate, danach ist er monatlich kündbar.</p>
 
             <div class="action-row" style="margin-top: 1.4rem; margin-bottom: 1.4rem;">
               <a class="btn btn--primary" href="#rechner">Vertrag berechnen</a>
@@ -369,7 +369,7 @@
               <div class="row-item">
                 <div>
                   <div class="row-item-title">1 Arbeitsplatz</div>
-                  <div class="row-item-sub">Mindestbetrag, zum Beispiel für Selbstständige im Büro oder Homeoffice</div>
+                  <div class="row-item-sub">Zum Beispiel für Selbstständige im Büro oder Homeoffice</div>
                 </div>
                 <div class="row-item-value">249 €</div>
               </div>
@@ -377,19 +377,19 @@
                 <div>
                   <div class="row-item-title">3 Arbeitsplätze</div>
                 </div>
-                <div class="row-item-value">597 €</div>
+                <div class="row-item-value">689 €</div>
               </div>
               <div class="row-item">
                 <div>
                   <div class="row-item-title">5 Arbeitsplätze</div>
                 </div>
-                <div class="row-item-value">995 €</div>
+                <div class="row-item-value">1.099 €</div>
               </div>
               <div class="row-item">
                 <div>
                   <div class="row-item-title">10 Arbeitsplätze</div>
                 </div>
-                <div class="row-item-value">1.990 €</div>
+                <div class="row-item-value">1.999 €</div>
               </div>
             </div>
 
@@ -415,17 +415,17 @@
 
         <div class="calc-wrapper" id="wartungsrechner">
           <div class="calc-list">
-            <div class="calc-row" data-calc-row data-price="199" data-default="1" data-label="Arbeitsplätze">
+            <div class="calc-row" data-calc-row data-workplace-tier="true" data-default="1" data-label="Arbeitsplätze">
               <div>
                 <div class="calc-label">Arbeitsplätze</div>
-                <div class="calc-desc">Ein Mitarbeiter mit Computer oder Notebook · 199 € je Arbeitsplatz und Monat</div>
+                <div class="calc-desc">Ein Mitarbeiter mit Computer oder Notebook · 1 Platz: 249 € · 3 Plätze: 689 € · 5 Plätze: 1.099 € · 10 Plätze: 1.999 €</div>
               </div>
               <div class="calc-stepper">
-                <button class="calc-btn" type="button" data-calc-dec aria-label="Arbeitsplätze verringern">−</button>
-                <input class="calc-input" type="number" min="0" max="999" value="1" aria-label="Anzahl Arbeitsplätze">
+                <button class="calc-btn" type="button" data-calc-dec aria-label="Arbeitsplätze verringern" disabled>−</button>
+                <input class="calc-input" type="number" min="1" max="999" value="1" aria-label="Anzahl Arbeitsplätze">
                 <button class="calc-btn" type="button" data-calc-inc aria-label="Arbeitsplätze erhöhen">+</button>
               </div>
-              <div class="calc-line-total" data-calc-subtotal>199,00 €</div>
+              <div class="calc-line-total" data-calc-subtotal>249,00 €</div>
             </div>
 
             <div class="calc-row" data-calc-row data-price="10" data-default="0" data-label="Virtuelle Maschinen">
@@ -550,10 +550,10 @@
           <div class="calc-summary" aria-live="polite">
             <div class="calc-summary-title">Monatsbeitrag</div>
             <div class="calc-summary-amount" id="calc-total-amount">249,00 €</div>
-            <div class="calc-min-hint" id="calc-min-hint">Summe der Positionen: 199,00 € · Es greift der Mindestbetrag von 249,00 € netto.</div>
+            <div class="calc-min-hint" id="calc-min-hint" hidden></div>
             <div class="calc-summary-meta">
-              netto zzgl. 19 % USt. · mindestens 249 € im Monat<br>
-              · Mindestlaufzeit 3 Monate, danach monatlich kündbar · keine Staffelpreise
+              netto zzgl. 19 % USt. · ab 249 € im Monat<br>
+              · Mindestlaufzeit 3 Monate, danach monatlich kündbar
             </div>
 
             <div class="calc-actions">
@@ -795,6 +795,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <script src="assets/js/main.js?v=4" defer></script>
+  <script src="assets/js/main.js?v=5" defer></script>
 </body>
 </html>
