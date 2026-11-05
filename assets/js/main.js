@@ -50,12 +50,20 @@
     backdrop.setAttribute('aria-hidden', 'true');
     document.body.appendChild(backdrop);
 
+    const mobileCta = mainNav.querySelector('.nav-mobile-cta');
+    if (mobileCta && !mobileCta.querySelector('.nav-mobile-hours')) {
+      const hoursNote = document.createElement('div');
+      hoursNote.className = 'nav-mobile-hours';
+      hoursNote.textContent = 'Telefonisch täglich 8 bis 20 Uhr · Termine nach Vereinbarung';
+      mobileCta.appendChild(hoursNote);
+    }
+
     const setMenuState = (open) => {
       menuBtn.setAttribute('aria-expanded', String(open));
       menuBtn.setAttribute('aria-label', open ? 'Menü schließen' : 'Menü öffnen');
       mainNav.classList.toggle('is-open', open);
       backdrop.classList.toggle('is-open', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+      root.classList.toggle('is-nav-open', open);
     };
 
     const closeMenu = (restoreFocus = false) => {
@@ -64,12 +72,20 @@
       if (restoreFocus) menuBtn.focus();
     };
 
-    menuBtn.addEventListener('click', () => {
+    menuBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
       setMenuState(!expanded);
     });
 
     backdrop.addEventListener('click', () => closeMenu(false));
+
+    document.addEventListener('click', (e) => {
+      if (!mainNav.classList.contains('is-open')) return;
+      if (!mainNav.contains(e.target) && !menuBtn.contains(e.target)) {
+        closeMenu(false);
+      }
+    });
 
     mainNav.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => closeMenu(false));
@@ -81,6 +97,10 @@
 
     window.addEventListener('resize', () => {
       if (window.innerWidth > 1060) closeMenu(false);
+    });
+
+    window.addEventListener('pageshow', () => {
+      closeMenu(false);
     });
   }
 
