@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 680" fill="none" role="img" aria-labelledby="cardTitle cardDesc">
+  <title id="cardTitle">Eymen Kumaru – Inhaber von Clavis IT Service</title>
+  <desc id="cardDesc">Persönliche Inhaberkarte von Eymen Kumaru, Clavis IT Service in Mannheim-Käfertal.</desc>
+  <defs>
+    <linearGradient id="cardBg" x1="0" y1="0" x2="600" y2="680" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#071A3E"/>
+      <stop offset="58%" stop-color="#0B2559"/>
+      <stop offset="100%" stop-color="#0E59F2"/>
+    </linearGradient>
+    <linearGradient id="badgeGrad" x1="210" y1="130" x2="390" y2="310" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#256BFF"/>
+      <stop offset="100%" stop-color="#0E59F2"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="600" height="680" rx="24" fill="url(#cardBg)"/>
+
+  <!-- Subtle Tronix geometric rings -->
+  <circle cx="510" cy="95" r="145" stroke="#60A5FA" stroke-opacity="0.16" stroke-width="28"/>
+  <circle cx="85" cy="595" r="130" stroke="#60A5FA" stroke-opacity="0.12" stroke-width="22"/>
+
+  <!-- Top status pill -->
+  <rect x="44" y="42" width="276" height="40" rx="20" fill="#FFFFFF" fill-opacity="0.12" stroke="#93C5FD" stroke-opacity="0.35"/>
+  <rect x="64" y="58" width="8" height="8" rx="2" fill="#38BDF8"/>
+  <text x="84" y="67" fill="#FFFFFF" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="14" font-weight="600" letter-spacing="0.4">IHR FESTER ANSPRECHPARTNER</text>
+
+  <!-- Central Monogram Crest (EK + Clavis Key motif) -->
+  <circle cx="300" cy="240" r="96" fill="url(#badgeGrad)" stroke="#93C5FD" stroke-opacity="0.45" stroke-width="3"/>
+  <circle cx="300" cy="240" r="112" stroke="#60A5FA" stroke-opacity="0.22" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="300" y="260" text-anchor="middle" fill="#FFFFFF" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="62" font-weight="700" letter-spacing="-2">EK</text>
+
+  <!-- Name & Role -->
+  <text x="300" y="398" text-anchor="middle" fill="#FFFFFF" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="34" font-weight="700">Eymen Kumaru</text>
+  <text x="300" y="434" text-anchor="middle" fill="#93C5FD" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="18" font-weight="600">Inhaber · Clavis IT Service</text>
+
+  <!-- Divider -->
+  <rect x="256" y="462" width="88" height="3" rx="1.5" fill="#38BDF8"/>
+
+  <!-- Fact cards at bottom -->
+  <rect x="48" y="496" width="504" height="136" rx="16" fill="#FFFFFF" fill-opacity="0.1" stroke="#FFFFFF" stroke-opacity="0.18"/>
+  <text x="80" y="538" fill="#FFFFFF" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="17" font-weight="600">✓  Direkt am Telefon &amp; persönlich bei Ihnen vor Ort</text>
+  <text x="80" y="572" fill="#E2E8F0" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" font-weight="500">✓  Standort Mannheim-Käfertal · 0 € Anfahrt in Mannheim</text>
+  <text x="80" y="606" fill="#E2E8F0" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="16" font-weight="500">✓  Verständlich erklärt – ohne Fachchinesisch</text>
+</svg>

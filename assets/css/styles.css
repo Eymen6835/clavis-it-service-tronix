@@ -1,0 +1,2459 @@
+@import url('./fonts.css');
+
+/* ==========================================================================
+   Clavis IT Service — Tronix IT-Service Design System
+   Reference Aesthetic: Tronix IT Service Demo (#0E59F2 / #1C1C25 / #071A3E / #F6FAFF)
+   Self-hosted Fonts: Space Grotesk, Schibsted Grotesk, Inter (100% DSGVO local)
+   ========================================================================== */
+
+:root {
+  --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Schibsted Grotesk', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Tronix Core Brand Palette */
+  --thm-color: #0E59F2;
+  --thm-hover: #0A47C4;
+  --thm-glow: rgba(14, 89, 242, 0.38);
+  --thm-soft: #EAF1FF;
+  --thm-soft-border: #C5D8FF;
+
+  --black-color: #1C1C25;
+  --navy-deep: #071A3E;
+  --navy-mid: #0B2048;
+
+  --bg: #FFFFFF;
+  --bg-subtle: #F6FAFF; /* Signature Tronix Ice-Blue Section Tint */
+  --bg-muted: #EDF3FC;
+  --surface: #FFFFFF;
+  --surface-raised: #FFFFFF;
+  --header-bg: rgba(255, 255, 255, 0.96);
+
+  --text: #1C1C25;
+  --text-secondary: #484E5A;
+  --text-muted: #5F6572;
+
+  --link-color: #0B50DE;
+  --link-hover: #0738A3;
+  --btn-primary-bg: #0E59F2;
+
+  --accent: #0E59F2;
+  --accent-hover: #1C1C25;
+  --accent-contrast: #FFFFFF;
+
+  --whatsapp: #14753E;
+  --whatsapp-hover: #0F5C30;
+  --whatsapp-text: #14753E;
+  --whatsapp-soft: #E6F6ED;
+
+  --warn-soft: #FFF5EB;
+  --warn-border: #F5CFA8;
+
+  --border: #E3E8F4;
+  --border-strong: #CBD5E8;
+
+  --box-shadow: 0px 9px 75px rgba(8, 20, 44, 0.09);
+  --card-shadow: 0px 9px 30px 0px rgba(14, 35, 78, 0.06);
+  --card-shadow-hover: 0px 18px 45px rgba(14, 89, 242, 0.14);
+
+  --radius-sm: 8px;
+  --radius-md: 15px;
+  --radius-lg: 20px;
+  --radius-pill: 30px;
+  --radius-full: 999px;
+
+  --container: 1220px;
+  --container-wide: 1380px;
+  --container-narrow: 820px;
+  --header-height: 86px;
+}
+
+/* System Dark Mode Fallback (unless user explicitly chose light) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #081226;
+    --bg-subtle: #0C1A36;
+    --bg-muted: #122449;
+    --surface: #102040;
+    --surface-raised: #152950;
+    --header-bg: rgba(8, 18, 38, 0.95);
+
+    --text: #F4F7FC;
+    --text-secondary: #C8D4E6;
+    --text-muted: #9BAAC2;
+
+    --thm-color: #4D8BFF;
+    --thm-hover: #7AA9FF;
+    --link-color: #6CA4FF;
+    --link-hover: #9BC0FF;
+    --btn-primary-bg: #0E59F2;
+    --whatsapp-text: #4ADE80;
+    --thm-soft: rgba(43, 114, 255, 0.16);
+    --thm-soft-border: rgba(108, 164, 255, 0.38);
+
+    --accent: #4D8BFF;
+    --accent-hover: #7AA9FF;
+    --accent-contrast: #FFFFFF;
+
+    --warn-soft: #261D17;
+    --warn-border: #5E432C;
+
+    --border: #1D3158;
+    --border-strong: #2B4578;
+
+    --box-shadow: 0px 12px 50px rgba(0, 0, 0, 0.42);
+    --card-shadow: 0px 9px 30px rgba(0, 0, 0, 0.32);
+    --card-shadow-hover: 0px 18px 45px rgba(14, 89, 242, 0.28);
+  }
+}
+
+/* Explicit Dark Mode via clavis-theme */
+:root[data-theme="dark"] {
+  --bg: #081226;
+  --bg-subtle: #0C1A36;
+  --bg-muted: #122449;
+  --surface: #102040;
+  --surface-raised: #152950;
+  --header-bg: rgba(8, 18, 38, 0.95);
+
+  --text: #F4F7FC;
+  --text-secondary: #C8D4E6;
+  --text-muted: #9BAAC2;
+
+  --thm-color: #4D8BFF;
+  --thm-hover: #7AA9FF;
+  --link-color: #6CA4FF;
+  --link-hover: #9BC0FF;
+  --btn-primary-bg: #0E59F2;
+  --whatsapp-text: #4ADE80;
+  --thm-soft: rgba(43, 114, 255, 0.16);
+  --thm-soft-border: rgba(108, 164, 255, 0.38);
+
+  --accent: #4D8BFF;
+  --accent-hover: #7AA9FF;
+  --accent-contrast: #FFFFFF;
+
+  --warn-soft: #261D17;
+  --warn-border: #5E432C;
+
+  --border: #1D3158;
+  --border-strong: #2B4578;
+
+  --box-shadow: 0px 12px 50px rgba(0, 0, 0, 0.42);
+  --card-shadow: 0px 9px 30px rgba(0, 0, 0, 0.32);
+  --card-shadow-hover: 0px 18px 45px rgba(14, 89, 242, 0.28);
+}
+
+/* Base & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 1.5rem);
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  background-color: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+img, svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+:focus-visible {
+  outline: 3px solid var(--thm-color);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 2000;
+  background: var(--thm-color);
+  color: #FFFFFF;
+  padding: 0.75rem 1.35rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+.skip-link:focus { top: 1rem; }
+
+/* Typography */
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 650;
+  line-height: 1.16;
+  letter-spacing: -0.022em;
+  color: var(--text);
+  margin: 0 0 1.1rem;
+  text-wrap: balance;
+}
+
+h3, h4, h5 {
+  font-family: var(--font-heading);
+  font-weight: 650;
+  line-height: 1.28;
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 0 0 0.65rem;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.25rem, 4.5vw, 3.85rem); }
+h2 { font-size: clamp(1.85rem, 3.3vw, 2.85rem); }
+h3 { font-size: clamp(1.22rem, 1.8vw, 1.45rem); }
+h4 { font-size: 1.12rem; }
+
+p {
+  margin: 0 0 1.1rem;
+  color: var(--text-secondary);
+}
+p:last-child { margin-bottom: 0; }
+
+p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 550;
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* Containers & Sections */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2rem);
+}
+
+.container--wide {
+  max-width: var(--container-wide);
+}
+
+.container--narrow {
+  max-width: var(--container-narrow);
+}
+
+.section {
+  padding-block: clamp(4.25rem, 7.5vw, 6.85rem);
+  position: relative;
+}
+
+.section--tight {
+  padding-block: clamp(2.5rem, 5vw, 4.25rem);
+}
+
+.section--subtle {
+  background-color: var(--bg-subtle);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ==========================================================================
+   Tronix Signature Subtitle Badges (Glowing 8x8 Blue Squares!)
+   ========================================================================== */
+.tronix-sub-badge {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  line-height: 1.2;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 1rem;
+}
+
+.tronix-sub-badge::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--thm-color);
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  box-shadow: 0px 3px 11px var(--thm-glow);
+}
+
+.tronix-sub-badge--center {
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.tronix-sub-badge--center::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--thm-color);
+  border-radius: 2px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  box-shadow: 0px 3px 11px var(--thm-glow);
+}
+
+.tronix-sub-badge--light {
+  color: #FFFFFF;
+}
+.tronix-sub-badge--light::before,
+.tronix-sub-badge--light::after {
+  background: #38BDF8;
+  box-shadow: 0px 3px 12px rgba(56, 189, 248, 0.55);
+}
+
+.section-header {
+  max-width: 66ch;
+  margin-bottom: clamp(2.25rem, 4.5vw, 3.35rem);
+}
+
+.section-header--center {
+  text-align: center;
+  margin-inline: auto;
+}
+
+.section-header p {
+  font-size: 1.08rem;
+}
+
+/* ==========================================================================
+   Tronix Header Template Four (Topbar + Sticky Navbar + Quick Call + Drawer)
+   ========================================================================== */
+.tronix-topbar {
+  background-color: var(--navy-deep);
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(14, 89, 242, 0.28) 0%, transparent 45%),
+    linear-gradient(90deg, #071A3E 0%, #0B2352 50%, #071A3E 100%);
+  color: rgba(255, 255, 255, 0.88);
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  padding: 0.62rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tronix-topbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tronix-topbar-left,
+.tronix-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.35rem;
+  flex-wrap: wrap;
+}
+
+.tronix-topbar-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tronix-topbar-item svg {
+  width: 15px;
+  height: 15px;
+  color: #4DA3FF;
+  flex-shrink: 0;
+}
+
+.tronix-topbar a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+.tronix-topbar a:hover {
+  color: #6EC1E4;
+}
+
+@media (max-width: 820px) {
+  .tronix-topbar-left { display: none; }
+  .tronix-topbar-inner { justify-content: center; }
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  height: var(--header-height);
+  background: var(--header-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 24px rgba(8, 20, 44, 0.05);
+}
+
+.header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  text-decoration: none;
+  color: var(--text);
+  flex-shrink: 0;
+}
+.brand:hover { color: var(--text); }
+
+.brand-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(14, 89, 242, 0.25);
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.brand-claim {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 550;
+  color: var(--text-muted);
+}
+
+@media (max-width: 420px) {
+  .brand-claim { display: none; }
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
+
+.nav-link {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.55rem 0.72rem;
+  border-radius: var(--radius-sm);
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--link-color);
+}
+
+.nav-link[aria-current="page"] {
+  color: var(--link-color);
+}
+
+.nav-link[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  left: 0.72rem;
+  right: 0.72rem;
+  bottom: 0.2rem;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--thm-color);
+}
+
+.nav-mobile-cta {
+  display: none;
+}
+
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 26, 62, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 340;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.nav-backdrop.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* Tronix Signature Quick-Call Widget in Header */
+.header-call-widget {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  padding-right: 0.35rem;
+}
+
+.header-call-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--thm-color);
+  color: var(--thm-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.22s ease, color 0.22s ease, transform 0.22s ease;
+}
+
+.header-call-widget:hover .header-call-icon {
+  background: var(--thm-color);
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+.header-call-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.header-call-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.22;
+}
+
+.header-call-label {
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.header-call-num {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-subtle);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
+  color: #FFFFFF;
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-sun { display: none; }
+.icon-moon { display: block; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .icon-sun { display: block; }
+  :root:not([data-theme="light"]) .icon-moon { display: none; }
+}
+:root[data-theme="dark"] .icon-sun { display: block; }
+:root[data-theme="dark"] .icon-moon { display: none; }
+
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  border: none;
+  background: var(--thm-soft);
+  color: var(--thm-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.menu-toggle:hover {
+  background: var(--thm-color);
+  color: #FFFFFF;
+}
+
+.menu-toggle svg { width: 22px; height: 22px; }
+.menu-toggle .icon-close { display: none; }
+.menu-toggle[aria-expanded="true"] .icon-menu { display: none; }
+.menu-toggle[aria-expanded="true"] .icon-close { display: block; }
+
+@media (max-width: 1240px) {
+  .header-call-meta { display: none; }
+  .header-call-widget { padding-right: 0; }
+}
+
+@media (max-width: 1060px) {
+  .menu-toggle { display: inline-flex; }
+  .main-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(320px, 86vw);
+    height: 100vh;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    background: var(--surface);
+    border-right: 3px solid var(--btn-primary-bg);
+    padding: 5.25rem 1.5rem 2rem;
+    box-shadow: 16px 0 48px rgba(7, 26, 62, 0.34);
+    z-index: 350;
+    gap: 0.2rem;
+    overflow-y: auto;
+  }
+  .main-nav.is-open { display: flex; }
+  .nav-link {
+    font-size: 1.06rem;
+    padding: 0.85rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+  }
+  .nav-link[aria-current="page"]::after { display: none; }
+  .nav-mobile-cta {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+  .nav-mobile-cta .btn {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.96rem;
+  }
+  .menu-toggle { position: relative; z-index: 360; }
+}
+
+/* ==========================================================================
+   Tronix Pill Buttons (.theme-btns / .btn)
+   ========================================================================== */
+.btn,
+.theme-btns {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  padding: 1rem 2.1rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .btn,
+  .theme-btns {
+    white-space: normal;
+    text-align: center;
+    padding: 0.92rem 1.45rem;
+  }
+}
+
+.btn svg, .theme-btns svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.btn--primary {
+  background: var(--btn-primary-bg);
+  color: #FFFFFF;
+  box-shadow: 0 8px 22px rgba(14, 89, 242, 0.28);
+}
+
+.btn--primary:hover {
+  background: var(--black-color);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+:root[data-theme="dark"] .btn--primary:hover {
+  background: #FFFFFF;
+  color: #071A3E;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn--primary:hover {
+    background: #FFFFFF;
+    color: #071A3E;
+  }
+}
+
+.btn--secondary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-strong);
+  box-shadow: var(--card-shadow);
+}
+
+.btn--secondary:hover {
+  background: var(--thm-color);
+  border-color: var(--thm-color);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn--white-pill {
+  background: #FFFFFF;
+  color: var(--thm-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.btn--white-pill:hover {
+  background: var(--black-color);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn--outline-light {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.32);
+}
+
+.btn--outline-light:hover {
+  background: #FFFFFF;
+  border-color: #FFFFFF;
+  color: var(--navy-deep);
+  transform: translateY(-2px);
+}
+
+.btn--whatsapp {
+  background: var(--whatsapp);
+  color: #FFFFFF;
+}
+.btn--whatsapp:hover {
+  background: var(--whatsapp-hover);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn--sm {
+  font-size: 0.92rem;
+  padding: 0.72rem 1.45rem;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.85rem;
+}
+
+/* QR Code Dropdown (Tronix Styled) */
+.qr-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.qr-dropdown summary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.96rem 1.5rem;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.25s ease;
+}
+
+.qr-dropdown--surface summary {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.qr-dropdown summary::-webkit-details-marker { display: none; }
+
+.qr-dropdown summary:hover {
+  background: #FFFFFF;
+  color: var(--navy-deep);
+  border-color: #FFFFFF;
+}
+
+.qr-dropdown summary svg {
+  width: 18px;
+  height: 18px;
+}
+
+.qr-popover {
+  position: absolute;
+  top: calc(100% + 0.75rem);
+  left: 0;
+  z-index: 120;
+  width: 230px;
+  background: #FFFFFF;
+  color: #1C1C25;
+  border: 1px solid #E3E8F4;
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  box-shadow: 0 20px 50px rgba(7, 26, 62, 0.28);
+  text-align: center;
+}
+
+.qr-popover img {
+  width: 148px;
+  height: 148px;
+  margin: 0.4rem auto 0.55rem;
+}
+
+.qr-popover-label {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #5A5F6A;
+}
+
+.qr-popover-num {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #0E59F2;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+  .qr-dropdown { display: none; }
+}
+
+/* ==========================================================================
+   Tronix Hero Slider Banner & Subpage Breadcrumb Hero
+   ========================================================================== */
+.tronix-hero {
+  position: relative;
+  min-height: 670px;
+  display: flex;
+  align-items: center;
+  padding-block: clamp(4.25rem, 8vw, 6.75rem);
+  background-color: var(--navy-deep);
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  color: #FFFFFF;
+}
+
+.tronix-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    102deg,
+    rgba(7, 26, 62, 0.95) 0%,
+    rgba(7, 26, 62, 0.86) 52%,
+    rgba(14, 89, 242, 0.58) 100%
+  );
+  z-index: 1;
+}
+
+/* Signature Tronix Diagonal Geometric Blue Ribbons on Right */
+.tronix-hero::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  bottom: -80px;
+  width: 560px;
+  height: 560px;
+  background:
+    linear-gradient(135deg, rgba(14, 89, 242, 0.42) 0%, rgba(110, 193, 228, 0.08) 70%);
+  border-radius: 60px;
+  transform: rotate(-22deg);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tronix-hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.tronix-hero-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.tronix-slide-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #FFFFFF;
+  background: rgba(14, 89, 242, 0.32);
+  border: 1px solid rgba(110, 193, 228, 0.38);
+  padding: 0.48rem 1.05rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 1.35rem;
+}
+
+.tronix-slide-kicker::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: #38BDF8;
+  box-shadow: 0 0 10px #38BDF8;
+}
+
+.tronix-hero h1 {
+  color: #FFFFFF;
+  font-size: clamp(2.35rem, 4.8vw, 4rem);
+  line-height: 1.13;
+  margin-bottom: 1.25rem;
+}
+
+.tronix-hero .lead {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(1.1rem, 1.5vw, 1.26rem);
+  line-height: 1.62;
+  max-width: 60ch;
+}
+
+.hero-quick-routes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.35rem;
+  margin-top: 1.65rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.hero-quick-routes a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: #CFE2FF;
+  text-decoration: none;
+}
+
+.hero-quick-routes a:hover {
+  color: #FFFFFF;
+  transform: translateX(3px);
+}
+
+.audience-price-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  font-weight: 650;
+  color: var(--link-color);
+  background: var(--thm-soft);
+  border: 1px solid var(--thm-soft-border);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-pill);
+  margin-bottom: 0.85rem;
+}
+
+/* Floating Glass Hero Card (Right Column on Desktop) */
+.tronix-hero-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: var(--radius-lg);
+  padding: 1.85rem;
+  color: #FFFFFF;
+  box-shadow: 0 24px 60px rgba(4, 12, 30, 0.35);
+  max-width: 340px;
+  justify-self: end;
+  text-align: center;
+}
+
+.tronix-hero-card-qr {
+  background: #FFFFFF;
+  padding: 0.9rem;
+  border-radius: var(--radius-md);
+  display: inline-block;
+  margin: 0.65rem auto 0.85rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+}
+
+.tronix-hero-card-qr img {
+  width: 146px;
+  height: 146px;
+}
+
+.tronix-hero-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #93C5FD;
+}
+
+.tronix-hero-card-phone {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-variant-numeric: tabular-nums;
+}
+
+.tronix-hero-card-sub {
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.78);
+  margin-top: 0.4rem;
+}
+
+@media (max-width: 960px) {
+  .tronix-hero { min-height: auto; }
+  .tronix-hero-grid { grid-template-columns: 1fr; }
+  .tronix-hero-card { display: none; }
+}
+
+/* Subpage Tronix Breadcrumb Banner (.tronix-page-hero) */
+.tronix-page-hero {
+  position: relative;
+  padding-block: clamp(3.5rem, 6.5vw, 5.25rem);
+  background-color: var(--navy-deep);
+  background-image:
+    radial-gradient(circle at 82% 28%, rgba(14, 89, 242, 0.42) 0%, transparent 45%),
+    radial-gradient(circle at 12% 85%, rgba(14, 89, 242, 0.24) 0%, transparent 42%),
+    linear-gradient(120deg, #071A3E 0%, #0A2352 60%, #0D337A 100%);
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.tronix-page-hero::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  border: 42px solid rgba(14, 89, 242, 0.16);
+  pointer-events: none;
+}
+
+.tronix-page-hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.tronix-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 550;
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 1rem;
+}
+
+.tronix-breadcrumb a {
+  color: #93C5FD;
+  text-decoration: none;
+}
+.tronix-breadcrumb a:hover { color: #FFFFFF; }
+
+.tronix-page-hero h1 {
+  color: #FFFFFF;
+  max-width: 24ch;
+}
+
+.tronix-page-hero .lead {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(1.08rem, 1.45vw, 1.22rem);
+  max-width: 64ch;
+}
+
+/* ==========================================================================
+   Tronix Service Six Cards (Audience Split & Featured Services)
+   ========================================================================== */
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.tronix-service-six {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--box-shadow);
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.tronix-service-six::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--thm-color), #38BDF8);
+  transform: scaleX(0.28);
+  transform-origin: left;
+  transition: transform 0.32s ease;
+}
+
+.tronix-service-six:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--thm-soft-border);
+  color: var(--text);
+}
+
+.tronix-service-six:hover::after {
+  transform: scaleX(1);
+}
+
+.service-six-media {
+  position: relative;
+  margin-bottom: 1.65rem;
+}
+
+.service-six-media img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.service-six-badge {
+  position: absolute;
+  bottom: -22px;
+  right: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--thm-color);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 22px rgba(14, 89, 242, 0.38);
+  border: 4px solid var(--surface);
+}
+
+.service-six-badge svg {
+  width: 25px;
+  height: 25px;
+}
+
+.tronix-service-six h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  margin-bottom: 0.7rem;
+}
+
+.tronix-service-six p {
+  font-size: 1.04rem;
+  margin-bottom: 1.5rem;
+}
+
+.audience-helper {
+  margin-top: 1.75rem;
+  padding: 1.15rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  text-align: center;
+  font-size: 1rem;
+}
+
+@media (max-width: 820px) {
+  .audience-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Tronix About Collage (.tronix-collage) & Pill List (.tronix-pill-list)
+   ========================================================================== */
+.tronix-about-split {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: clamp(2.25rem, 5vw, 4.25rem);
+  align-items: center;
+}
+
+.tronix-collage {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 1.1rem;
+  align-items: stretch;
+  position: relative;
+}
+
+.tronix-collage-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.tronix-collage-stack img {
+  width: 100%;
+  height: 215px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+}
+
+.tronix-collage-main {
+  position: relative;
+}
+
+.tronix-collage-main img {
+  width: 100%;
+  height: 100%;
+  min-height: 448px;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--border);
+}
+
+.tronix-collage-caption {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(7, 26, 62, 0.92);
+  backdrop-filter: blur(10px);
+  color: #FFFFFF;
+  padding: 0.9rem 1.15rem;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--thm-color);
+}
+
+.tronix-collage-caption strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+}
+
+.tronix-collage-caption span {
+  font-size: 0.85rem;
+  color: #93C5FD;
+}
+
+.tronix-pill-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.tronix-pill-item {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  padding: 0.85rem 1.5rem 0.85rem 0.85rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.22s ease, border-color 0.22s ease;
+}
+
+.tronix-pill-item:hover {
+  transform: translateX(6px);
+  border-color: var(--thm-soft-border);
+}
+
+.tronix-pill-icon {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  border-radius: 50%;
+  background: var(--thm-color);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(14, 89, 242, 0.3);
+}
+
+.tronix-pill-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.tronix-pill-body h3 {
+  font-size: 1.08rem;
+  margin-bottom: 0.15rem;
+}
+
+.tronix-pill-body p {
+  font-size: 0.94rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 960px) {
+  .tronix-about-split { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 580px) {
+  .tronix-collage { grid-template-columns: 1fr; }
+  .tronix-collage-stack { display: none; }
+  .tronix-collage-main img { min-height: 360px; }
+  .tronix-pill-item {
+    border-radius: var(--radius-md);
+    align-items: flex-start;
+    padding: 1.15rem;
+  }
+}
+
+/* ==========================================================================
+   Tronix Dark Counter / Fact Band (.tronix-counter-band)
+   ========================================================================== */
+.tronix-counter-band {
+  background-color: var(--navy-deep);
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(14, 89, 242, 0.32) 0%, transparent 50%),
+    radial-gradient(circle at 85% 50%, rgba(14, 89, 242, 0.25) 0%, transparent 45%);
+  padding-block: clamp(3rem, 5vw, 4.25rem);
+  color: #FFFFFF;
+}
+
+.tronix-counter-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.75rem;
+}
+
+.tronix-counter-item {
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+}
+
+.tronix-counter-icon {
+  width: 74px;
+  height: 74px;
+  min-width: 74px;
+  border-radius: 50%;
+  background: var(--thm-color);
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(14, 89, 242, 0.4);
+}
+
+.tronix-counter-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.tronix-counter-num {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: #FFFFFF;
+  font-variant-numeric: tabular-nums;
+}
+
+.tronix-counter-label {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #93C5FD;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 1020px) {
+  .tronix-counter-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .tronix-counter-grid { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
+   Tronix General Grids, Service Cards & Gradient Circle Icons (.tronix-icon-two)
+   ========================================================================== */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.65rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.65rem; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4rem; }
+
+@media (max-width: 980px) {
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.85rem;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--thm-soft-border);
+}
+
+.card--tinted {
+  background: var(--bg-subtle);
+  box-shadow: none;
+}
+
+.card--accent {
+  background: var(--thm-soft);
+  border-color: var(--thm-soft-border);
+}
+
+.card--warm {
+  background: var(--warn-soft);
+  border-color: var(--warn-border);
+}
+
+/* Tronix Signature .tronix-icon-two Gradient Circle */
+.card-icon,
+.tronix-icon-two {
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  border-radius: 50%;
+  background: linear-gradient(93deg, rgba(14, 89, 242, 0.16) 0%, rgba(14, 89, 242, 0.02) 85%);
+  border: 1px solid var(--border);
+  color: var(--thm-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+  transition: all 0.28s ease;
+}
+
+.card:hover .card-icon,
+.step-card:hover .step-num {
+  background: var(--thm-color);
+  border-color: var(--thm-color);
+  color: #FFFFFF;
+  box-shadow: 0 8px 20px rgba(14, 89, 242, 0.32);
+}
+
+.card-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+/* Process / Steps Cards */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.steps-grid--4 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.step-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--thm-soft-border);
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(93deg, rgba(14, 89, 242, 0.16) 0%, rgba(14, 89, 242, 0.02) 85%);
+  border: 1px solid var(--border);
+  color: var(--thm-color);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  margin-bottom: 1.25rem;
+  transition: all 0.28s ease;
+}
+
+@media (max-width: 880px) {
+  .steps-grid, .steps-grid--4 { grid-template-columns: 1fr; }
+}
+
+/* Checklists */
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.check-list li {
+  position: relative;
+  padding-left: 2rem;
+  color: var(--text-secondary);
+}
+
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.32rem;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--thm-color);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8.2L6.5 11.2L12.5 5' stroke='%23FFFFFF' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: 0 3px 10px rgba(14, 89, 242, 0.28);
+}
+
+/* Jump Bar Pills (Privatkunden) & City Pills */
+.jump-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.35rem;
+  box-shadow: var(--box-shadow);
+  margin-top: -2rem;
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 720px) {
+  .jump-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding: 0.85rem 1rem;
+  }
+  .jump-bar-label {
+    white-space: nowrap;
+  }
+  .jump-pill {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+.jump-bar-label {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 650;
+  color: var(--text);
+  margin-right: 0.35rem;
+}
+
+.jump-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.jump-pill:hover {
+  background: var(--thm-color);
+  border-color: var(--thm-color);
+  color: #FFFFFF;
+}
+
+.city-pills {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.city-pills li {
+  padding: 0.48rem 1rem;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+  box-shadow: var(--card-shadow);
+}
+
+.city-pills li:first-child {
+  background: var(--thm-color);
+  border-color: var(--thm-color);
+  color: #FFFFFF;
+}
+
+/* ==========================================================================
+   Pricing Tabs, Price Boxes & Row Tables
+   ========================================================================== */
+.tabs-nav {
+  display: inline-flex;
+  background: var(--bg-subtle);
+  padding: 0.35rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+  gap: 0.3rem;
+}
+
+.tab-btn {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 650;
+  padding: 0.78rem 1.6rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.tab-btn[aria-selected="true"] {
+  background: var(--thm-color);
+  color: #FFFFFF;
+  box-shadow: 0 6px 18px rgba(14, 89, 242, 0.3);
+}
+
+.tab-panel[hidden] { display: none; }
+
+.price-feature-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--thm-color);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.85rem, 3.5vw, 2.85rem);
+  box-shadow: var(--box-shadow);
+}
+
+.price-hero-figure {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-block: 0.4rem 1.1rem;
+}
+
+.price-big {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 3.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--thm-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.price-unit {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.price-note-bar {
+  margin-top: 1.35rem;
+  padding: 0.95rem 1.2rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.row-table {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+}
+
+.row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.15rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.18s ease;
+}
+
+.row-item:hover {
+  background: var(--bg-subtle);
+}
+
+.row-item:last-child { border-bottom: none; }
+
+.row-item-title {
+  font-family: var(--font-heading);
+  font-weight: 650;
+  color: var(--text);
+  font-size: 1.03rem;
+}
+
+.row-item-sub {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.row-item-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--thm-color);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+@media (max-width: 580px) {
+  .row-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+  .row-item-value { text-align: left; }
+}
+
+/* ==========================================================================
+   Wartungsvertrag Calculator (Tronix Edition)
+   ========================================================================== */
+.calc-wrapper {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.calc-list {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--box-shadow);
+}
+
+.calc-row {
+  display: grid;
+  grid-template-columns: 1fr auto minmax(96px, auto);
+  align-items: center;
+  gap: 1rem;
+  padding: 1.05rem 1.45rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.calc-row:last-child { border-bottom: none; }
+
+.calc-label {
+  font-family: var(--font-heading);
+  font-weight: 650;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.calc-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.12rem;
+}
+
+.calc-stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  overflow: hidden;
+  padding: 2px;
+}
+
+.calc-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.16s ease;
+}
+
+.calc-btn:hover:not(:disabled) {
+  background: var(--btn-primary-bg);
+  color: #FFFFFF;
+}
+
+.calc-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.calc-input {
+  width: 44px;
+  height: 34px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  -moz-appearance: textfield;
+}
+.calc-input::-webkit-outer-spin-button,
+.calc-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.calc-line-total {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--text);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-summary {
+  position: sticky;
+  top: calc(var(--header-height) + 1.5rem);
+  background: var(--navy-deep);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: 0 20px 55px rgba(7, 26, 62, 0.25);
+  border-top: 4px solid var(--thm-color);
+}
+
+.calc-summary-title {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #93C5FD;
+}
+
+.calc-summary-amount {
+  font-family: var(--font-display);
+  font-size: 2.85rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #FFFFFF;
+  line-height: 1.1;
+  margin-block: 0.45rem 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.calc-summary-meta {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.55;
+  margin-bottom: 1.35rem;
+}
+
+.calc-min-hint {
+  font-size: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  background: rgba(14, 89, 242, 0.28);
+  border: 1px solid rgba(147, 197, 253, 0.3);
+  color: #E0EEFF;
+  margin-bottom: 1.1rem;
+}
+
+.calc-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+.calc-actions .btn { width: 100%; }
+
+@media (max-width: 960px) {
+  .calc-wrapper { grid-template-columns: 1fr; }
+  .calc-summary { position: static; }
+}
+@media (max-width: 600px) {
+  .calc-row { grid-template-columns: 1fr auto; }
+  .calc-row > div:first-child { grid-column: 1 / -1; }
+}
+
+/* ==========================================================================
+   Tronix FAQ Accordions
+   ========================================================================== */
+.faq-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-item[open] {
+  border-color: var(--thm-color);
+  box-shadow: var(--box-shadow);
+}
+
+.faq-item summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  font-family: var(--font-heading);
+  font-weight: 650;
+  font-size: 1.06rem;
+  color: var(--text);
+  cursor: pointer;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: "+";
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--thm-color);
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.faq-item[open] summary::after {
+  content: "−";
+  background: var(--thm-color);
+  border-color: var(--thm-color);
+  color: #FFFFFF;
+}
+
+.faq-answer {
+  padding: 0 1.5rem 1.4rem;
+  color: var(--text-secondary);
+  max-width: 72ch;
+}
+
+/* ==========================================================================
+   Tronix CTA Banner (Deep Navy + Royal Blue Diagonal Tech Banner)
+   ========================================================================== */
+.cta-banner {
+  position: relative;
+  background-color: var(--navy-deep);
+  background-image:
+    radial-gradient(circle at 75% 50%, rgba(14, 89, 242, 0.55) 0%, transparent 55%),
+    linear-gradient(110deg, #071A3E 0%, #0C2B68 62%, #0E59F2 100%);
+  color: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: clamp(2.35rem, 5vw, 3.75rem);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2.5rem;
+  align-items: center;
+  box-shadow: 0 22px 60px rgba(7, 26, 62, 0.25);
+  overflow: hidden;
+}
+
+.cta-banner::before {
+  content: "";
+  position: absolute;
+  left: -60px;
+  bottom: -90px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 36px solid rgba(255, 255, 255, 0.05);
+  pointer-events: none;
+}
+
+.cta-banner h2 {
+  color: #FFFFFF;
+  margin-bottom: 0.7rem;
+}
+
+.cta-banner p {
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 1.1rem;
+  max-width: 54ch;
+}
+
+.cta-qr-card {
+  position: relative;
+  z-index: 2;
+  background: #FFFFFF;
+  color: #1C1C25;
+  border-radius: var(--radius-md);
+  padding: 1.05rem 1.2rem;
+  text-align: center;
+  width: 190px;
+  flex-shrink: 0;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.cta-qr-card img {
+  width: 128px;
+  height: 128px;
+  margin: 0.35rem auto 0.45rem;
+}
+
+.cta-qr-caption {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: #5A5F6A;
+}
+
+.cta-qr-phone {
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #0E59F2;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 820px) {
+  .cta-banner { grid-template-columns: 1fr; }
+  .cta-qr-card { display: none; }
+}
+
+/* ==========================================================================
+   Remote Support & Contact Cards
+   ========================================================================== */
+.download-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--thm-color);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.85rem, 3.5vw, 2.75rem);
+  box-shadow: var(--box-shadow);
+  max-width: 700px;
+}
+
+.os-switch {
+  margin-top: 1.1rem;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.os-switch a {
+  font-weight: 650;
+  margin-inline: 0.25rem;
+}
+
+.mobile-notice {
+  margin-top: 1.25rem;
+  padding: 1.05rem 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--warn-soft);
+  border: 1px solid var(--warn-border);
+  color: var(--text);
+  font-size: 0.96rem;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  box-shadow: var(--box-shadow);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--thm-soft-border);
+}
+
+.contact-card-kicker {
+  font-family: var(--font-heading);
+  font-size: 0.84rem;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--thm-color);
+  margin-bottom: 0.5rem;
+}
+
+.contact-card-main {
+  font-family: var(--font-display);
+  font-size: 1.38rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  word-break: break-word;
+}
+.contact-card-main:hover { color: var(--thm-color); }
+
+/* ==========================================================================
+   Legal Content (Impressum & Datenschutz)
+   ========================================================================== */
+.legal-content h2 {
+  font-size: 1.4rem;
+  margin-top: 2.35rem;
+  margin-bottom: 0.7rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.legal-content h2:first-of-type { margin-top: 1rem; border-top: none; padding-top: 0; }
+.legal-content h3 { font-size: 1.12rem; margin-top: 1.35rem; margin-bottom: 0.45rem; }
+.legal-content ul { color: var(--text-secondary); padding-left: 1.35rem; margin: 0.75rem 0 1.25rem; }
+.legal-content li { margin-bottom: 0.45rem; }
+
+.address-block {
+  font-style: normal;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--thm-color);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.5rem;
+  line-height: 1.72;
+  color: var(--text);
+  margin-block: 0.75rem 1.25rem;
+}
+
+/* ==========================================================================
+   Tronix Footer Four (#071A3E Navy + 50px Title Underline + Floating White Bar)
+   ========================================================================== */
+.site-footer {
+  background-color: var(--navy-deep);
+  background-image:
+    radial-gradient(circle at 90% 15%, rgba(14, 89, 242, 0.24) 0%, transparent 40%),
+    radial-gradient(circle at 10% 85%, rgba(14, 89, 242, 0.16) 0%, transparent 45%);
+  color: #A8AFBC;
+  padding-top: clamp(4rem, 7vw, 5.5rem);
+  padding-bottom: 2.25rem;
+  margin-top: 2rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1.05fr 0.8fr 0.8fr;
+  gap: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.site-footer .brand-name { color: #FFFFFF; }
+.site-footer .brand-claim { color: #8FA2C4; }
+.site-footer p { color: #A8AFBC; }
+
+.footer-heading {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 650;
+  color: #FFFFFF;
+  position: relative;
+  margin-bottom: 2.1rem;
+}
+
+/* Signature Tronix 50px Underline Bar under Footer Widget Titles */
+.footer-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -12px;
+  width: 48px;
+  height: 2.5px;
+  background: var(--thm-color);
+  border-radius: 2px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.footer-links li {
+  color: #A8AFBC;
+  font-size: 0.96rem;
+}
+
+.footer-links a {
+  color: #C4CCDA;
+  text-decoration: none;
+  font-size: 0.96rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.footer-links a:hover {
+  color: #FFFFFF;
+  transform: translateX(3px);
+}
+
+/* Signature Tronix Floating Rounded Copyright Bar */
+.footer-bottom {
+  background: #FFFFFF;
+  color: #1C1C25;
+  border-radius: 12px;
+  padding: 1.15rem 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+:root[data-theme="dark"] .footer-bottom {
+  background: #102040;
+  color: #DCE5F2;
+  border: 1px solid #1D3158;
+}
+
+@media (max-width: 920px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { padding: 1.1rem 1.25rem; }
+}
+
+/* Tronix Floating Back-to-Top Circle (#back-top) */
+.back-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--thm-color);
+  color: #FFFFFF;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(14, 89, 242, 0.42);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: all 0.28s ease;
+  z-index: 250;
+}
+
+.back-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-top:hover {
+  background: var(--black-color);
+  transform: translateY(-3px);
+}
+
+.back-top svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile Sticky Quick-Action Bar (Smartphone UX) */
+.mobile-cta-bar {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  body.has-mobile-cta {
+    padding-bottom: 76px;
+  }
+  .mobile-cta-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 280;
+    display: grid;
+    grid-template-columns: 1.25fr 0.95fr;
+    gap: 0.6rem;
+    padding: 0.65rem 0.9rem calc(0.65rem + env(safe-area-inset-bottom, 0px));
+    background: var(--header-bg);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -8px 28px rgba(8, 20, 44, 0.12);
+  }
+  .mobile-cta-bar .btn {
+    padding: 0.78rem 0.9rem;
+    font-size: 0.94rem;
+    white-space: nowrap;
+  }
+  body.has-mobile-cta .back-top {
+    bottom: 88px;
+    right: 16px;
+  }
+}
+
+@media print {
+  .tronix-topbar, .site-header, .cta-banner, .qr-dropdown, .back-top, .mobile-cta-bar, .nav-backdrop {
+    display: none !important;
+  }
+  body { background: #FFFFFF; color: #000000; padding-bottom: 0 !important; }
+}
