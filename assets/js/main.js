@@ -195,9 +195,6 @@
       const selectedLines = [];
 
       rows.forEach((row) => {
-        const hasBase = row.dataset.basePrice !== undefined;
-        const basePrice = parseFloat(row.dataset.basePrice || '0');
-        const extraPrice = parseFloat(row.dataset.extraPrice || '0');
         const unitPrice = parseFloat(row.dataset.price || '0');
         const label = row.dataset.label || '';
         const input = row.querySelector('.calc-input');
@@ -212,24 +209,14 @@
 
         if (decBtn) decBtn.disabled = qty <= minQty;
 
-        const lineTotal = hasBase
-          ? (qty > 0 ? basePrice + (qty - 1) * extraPrice : 0)
-          : qty * unitPrice;
+        const lineTotal = qty * unitPrice;
         rawSum += lineTotal;
 
         if (lineOut) {
           lineOut.textContent = `${fmt.format(lineTotal)} €`;
         }
         if (qty > 0) {
-          if (hasBase) {
-            selectedLines.push(
-              qty === 1
-                ? `- 1x Arbeitsplatz (Festbetrag inkl. 3 Std.): ${fmt.format(lineTotal)} € netto`
-                : `- ${qty}x ${label} (1. Platz 249 € + ${qty - 1}x à 80 €): ${fmt.format(lineTotal)} € netto`
-            );
-          } else {
-            selectedLines.push(`- ${qty}x ${label}: ${fmt.format(lineTotal)} € netto`);
-          }
+          selectedLines.push(`- ${qty}x ${label}: ${fmt.format(lineTotal)} € netto`);
         }
       });
 
