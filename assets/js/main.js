@@ -178,7 +178,7 @@
   /* 5. Wartungsvertrag Calculator (geschaeftskunden.html#rechner) */
   const calcEl = document.getElementById('wartungsrechner');
   if (calcEl) {
-    const MIN_MONTHLY = 199;
+    const MIN_MONTHLY = 249;
     const fmt = new Intl.NumberFormat('de-DE', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
@@ -195,27 +195,41 @@
       const selectedLines = [];
 
       rows.forEach((row) => {
+        const hasBase = row.dataset.basePrice !== undefined;
+        const basePrice = parseFloat(row.dataset.basePrice || '0');
+        const extraPrice = parseFloat(row.dataset.extraPrice || '0');
         const unitPrice = parseFloat(row.dataset.price || '0');
         const label = row.dataset.label || '';
         const input = row.querySelector('.calc-input');
         const decBtn = row.querySelector('[data-calc-dec]');
         const lineOut = row.querySelector('[data-calc-subtotal]');
 
+        const minQty = parseInt(input.min, 10) || 0;
         let qty = parseInt(input.value, 10);
-        if (Number.isNaN(qty) || qty < 0) qty = 0;
+        if (Number.isNaN(qty) || qty < minQty) qty = minQty;
         if (qty > 999) qty = 999;
         input.value = String(qty);
 
-        if (decBtn) decBtn.disabled = qty <= 0;
+        if (decBtn) decBtn.disabled = qty <= minQty;
 
-        const lineTotal = qty * unitPrice;
+        const lineTotal = hasBase
+          ? (qty > 0 ? basePrice + (qty - 1) * extraPrice : 0)
+          : qty * unitPrice;
         rawSum += lineTotal;
 
         if (lineOut) {
           lineOut.textContent = `${fmt.format(lineTotal)} €`;
         }
         if (qty > 0) {
-          selectedLines.push(`- ${qty}x ${label}: ${fmt.format(lineTotal)} € netto`);
+          if (hasBase) {
+            selectedLines.push(
+              qty === 1
+                ? `- 1x Arbeitsplatz (Festbetrag inkl. 3 Std.): ${fmt.format(lineTotal)} € netto`
+                : `- ${qty}x ${label} (1. Platz 249 € + ${qty - 1}x à 80 €): ${fmt.format(lineTotal)} € netto`
+            );
+          } else {
+            selectedLines.push(`- ${qty}x ${label}: ${fmt.format(lineTotal)} € netto`);
+          }
         }
       });
 
@@ -227,7 +241,7 @@
       if (minHintEl) {
         if (rawSum < MIN_MONTHLY) {
           minHintEl.hidden = false;
-          minHintEl.textContent = `Summe der Positionen: ${fmt.format(rawSum)} € · Es greift der Mindestbetrag von 199,00 € netto.`;
+          minHintEl.textContent = `Summe der Positionen: ${fmt.format(rawSum)} € · Es greift der Mindestbetrag von 249,00 € netto.`;
         } else {
           minHintEl.hidden = true;
         }
@@ -261,17 +275,18 @@
       const input = row.querySelector('.calc-input');
       const decBtn = row.querySelector('[data-calc-dec]');
       const incBtn = row.querySelector('[data-calc-inc]');
+      const minQty = parseInt(input.min, 10) || 0;
 
       if (decBtn) {
         decBtn.addEventListener('click', () => {
-          const val = Math.max(0, (parseInt(input.value, 10) || 0) - 1);
+          const val = Math.max(minQty, (parseInt(input.value, 10) || minQty) - 1);
           input.value = String(val);
           updateCalculator();
         });
       }
       if (incBtn) {
         incBtn.addEventListener('click', () => {
-          const val = Math.min(999, (parseInt(input.value, 10) || 0) + 1);
+          const val = Math.min(999, (parseInt(input.value, 10) || minQty) + 1);
           input.value = String(val);
           updateCalculator();
         });
