@@ -14,7 +14,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/styles.css?v=10">
+  <link rel="stylesheet" href="assets/css/styles.css?v=14">
   <script>
     (function(){try{var t=localStorage.getItem('clavis-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </script>
@@ -90,9 +90,9 @@
       <nav class="main-nav" id="hauptnavigation" aria-label="Hauptnavigation">
         <a class="nav-link" href="index.html">Start</a>
         
-        <div class="nav-group is-open" data-nav-group>
+        <div class="nav-group" data-nav-group>
           <a class="nav-link nav-link--parent" href="geschaeftskunden.html" aria-current="page">Unternehmen</a>
-          <button class="nav-sub-toggle" type="button" aria-expanded="true" aria-controls="untermenue-unternehmen" aria-label="Untermenü Unternehmen schließen">
+          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="untermenue-unternehmen" aria-label="Untermenü Unternehmen öffnen">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
           </button>
           <div class="nav-sub" id="untermenue-unternehmen" role="menu">
@@ -282,7 +282,7 @@
         <a class="jump-pill" href="#microsoft-365">Microsoft 365</a>
         <a class="jump-pill" href="#datensicherung">Sicherheit &amp; Backup</a>
         <a class="jump-pill" href="#zeiterfassung">Zeiterfassung &amp; E-Rechnung</a>
-        <a class="jump-pill" href="webseiten.html">Websites</a>
+        <a class="jump-pill" href="webseiten-service.html">Websites</a>
         <a class="jump-pill" href="#wartungsvertrag">Wartungsvertrag</a>
       </nav>
     </div>
@@ -421,7 +421,7 @@
             </div>
             <h3>Websites für Unternehmen</h3>
             <p>Ich erstelle schlanke Firmen-Websites, die schnell laden, auf dem Smartphone gut lesbar sind und Impressum sowie Datenschutzerklärung enthalten. Kunden mit Wartungsvertrag erhalten einen vergünstigten Festpreis.</p>
-            <p style="margin-top: 0.75rem;"><a href="webseiten.html"><strong>Mehr zu Websites →</strong></a></p>
+            <p style="margin-top: 0.75rem;"><a href="webseiten-service.html"><strong>Mehr zu Websites →</strong></a></p>
           </div>
         </div>
 
@@ -872,37 +872,44 @@
             </span>
           </a>
           <p style="margin-top: 1.1rem; font-size: 0.96rem;">IT-Service für Privathaushalte und kleine Unternehmen in Mannheim und Umgebung – persönlich betreut vom Inhaber.</p>
-        </div>
-
-        <div>
-          <div class="footer-heading">Kontakt</div>
-          <ul class="footer-links">
-            <li>Inhaber Eymen Kumaru</li>
+          <ul class="footer-links footer-contact">
             <li>Mannheimer Straße 57a, 68309 Mannheim</li>
             <li><a class="tabular" href="tel:+491626327036">0162 63270 36</a> · <a href="https://wa.me/491626327036" rel="noopener noreferrer">WhatsApp</a></li>
             <li><a href="mailto:kontakt@clavis-itservice.de">kontakt@clavis-itservice.de</a></li>
-            <li style="font-size: 0.88rem;">Telefonisch täglich 8–20 Uhr · Termine nach Vereinbarung</li>
+            <li>Telefonisch täglich 8–20 Uhr · Termine nach Vereinbarung</li>
           </ul>
         </div>
 
         <div>
-          <div class="footer-heading">Navigation</div>
+          <div class="footer-heading">Für Unternehmen</div>
           <ul class="footer-links">
-            <li><a href="index.html">Start</a></li>
-            <li><a href="geschaeftskunden.html">Unternehmen</a></li>
-            <li><a href="leistungen.html">Privatkunden</a></li>
+            <li><a href="geschaeftskunden.html">Übersicht &amp; Wartungsvertrag</a></li>
+            <li><a href="check.html">IT-Risiko-Check</a></li>
             <li><a href="it-infrastruktur.html">IT-Infrastruktur</a></li>
-            <li><a href="webseiten.html">Websites</a></li>
+            <li><a href="ki-automatisierung.html">Automatisierung &amp; KI</a></li>
+            <li><a href="webseiten-service.html">Webseiten-Service</a></li>
+            <li><a href="individualsoftware.html">Individualsoftware</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Für Privatkunden</div>
+          <ul class="footer-links">
+            <li><a href="leistungen.html">Übersicht</a></li>
+            <li><a href="pc-laptop-service.html">PC &amp; Laptop Service</a></li>
+            <li><a href="heimnetzwerk-wlan.html">Heimnetzwerk &amp; WLAN</a></li>
+            <li><a href="smart-home.html">Smart Home</a></li>
+            <li><a href="senioren-it-service.html">Senioren IT-Service</a></li>
+            <li><a href="fernwartung.html">Fernwartung starten</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-heading">Clavis IT Service</div>
+          <ul class="footer-links">
             <li><a href="preise.html">Preise</a></li>
             <li><a href="ueber-mich.html">Über mich</a></li>
-            <li><a href="kontakt.html">Kontakt</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="footer-heading">Service &amp; Rechtliches</div>
-          <ul class="footer-links">
-            <li><a href="fernwartung.html">Fernwartung starten</a></li>
+            <li><a href="kontakt.html">Kontakt &amp; Einsatzgebiet</a></li>
             <li><a href="impressum.html">Impressum</a></li>
             <li><a href="datenschutz.html">Datenschutz</a></li>
           </ul>
@@ -928,6 +935,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <script src="assets/js/main.js?v=7" defer></script>
+  <script src="assets/js/main.js?v=8" defer></script>
 </body>
 </html>
