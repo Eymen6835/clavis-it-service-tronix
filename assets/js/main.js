@@ -54,7 +54,7 @@
     if (mobileCta && !mobileCta.querySelector('.nav-mobile-hours')) {
       const hoursNote = document.createElement('div');
       hoursNote.className = 'nav-mobile-hours';
-      hoursNote.textContent = 'Telefonisch täglich 8 bis 20 Uhr · Termine nach Vereinbarung';
+      hoursNote.textContent = 'Telefonisch täglich 8–20 Uhr · Termine nach Vereinbarung';
       mobileCta.appendChild(hoursNote);
     }
 
@@ -102,6 +102,58 @@
     window.addEventListener('pageshow', () => {
       closeMenu(false);
     });
+  }
+
+  /* 2b. Aufklappmenüs „Unternehmen“ / „Privatkunden“ */
+  const navGroups = Array.from(document.querySelectorAll('[data-nav-group]'));
+  if (navGroups.length) {
+    const setGroup = (group, open) => {
+      group.classList.toggle('is-open', open);
+      const btn = group.querySelector('.nav-sub-toggle');
+      if (btn) {
+        btn.setAttribute('aria-expanded', String(open));
+        const label = group.querySelector('.nav-link--parent');
+        const name = label ? label.textContent.trim() : '';
+        btn.setAttribute('aria-label', `Untermenü ${name} ${open ? 'schließen' : 'öffnen'}`);
+      }
+    };
+    const closeAllGroups = (except) => {
+      navGroups.forEach((g) => { if (g !== except) setGroup(g, false); });
+    };
+
+    navGroups.forEach((group) => {
+      const btn = group.querySelector('.nav-sub-toggle');
+      if (!btn) return;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = !group.classList.contains('is-open');
+        closeAllGroups(group);
+        setGroup(group, open);
+      });
+      // Auf dem Desktop schließen, sobald der Fokus die Gruppe verlässt
+      group.addEventListener('focusout', (e) => {
+        if (window.innerWidth > 1060 && !group.contains(e.relatedTarget)) setGroup(group, false);
+      });
+      group.querySelectorAll('.nav-sub a').forEach((link) => {
+        link.addEventListener('click', () => setGroup(group, false));
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth > 1060 && !navGroups.some((g) => g.contains(e.target))) closeAllGroups();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      const openGroup = navGroups.find((g) => g.classList.contains('is-open'));
+      if (openGroup && window.innerWidth > 1060) {
+        setGroup(openGroup, false);
+        const btn = openGroup.querySelector('.nav-sub-toggle');
+        if (btn) btn.focus();
+      }
+    });
+
+    window.addEventListener('pageshow', () => closeAllGroups());
   }
 
   /* 3. Close QR Popovers on Outside Click or Escape */
@@ -240,7 +292,7 @@
         if (isWorkplaceTier && workplaceDesc) {
           if (qty <= 1) {
             workplaceDesc.textContent =
-              'Ein Mitarbeiter mit Computer oder Notebook · 249 € pro Platz (ab 2 Plätzen Mengenrabatt bis 24 %)';
+              'Eine Person mit Computer oder Laptop · 249 € pro Platz, ab 2 Plätzen Mengenrabatt bis rund 24 %';
           } else {
             const perSeat = Math.round(lineTotal / qty);
             const discountPct = Math.round((1 - perSeat / 249) * 100);
@@ -269,7 +321,7 @@
       if (minHintEl) {
         if (rawSum < MIN_MONTHLY) {
           minHintEl.hidden = false;
-          minHintEl.textContent = `Summe der Positionen: ${fmt.format(rawSum)} € · Es greift der Mindestbetrag von 249,00 € netto.`;
+          minHintEl.textContent = `Summe der Positionen: ${fmt.format(rawSum)} € · Es gilt der Mindestbetrag von 249,00 € netto.`;
         } else {
           minHintEl.hidden = true;
         }
@@ -356,10 +408,10 @@
 
     if (isMac) {
       dlBtn.href = MAC_URL;
-      if (osBadge) osBadge.textContent = 'Für macOS erkannt (auch für Windows verfügbar)';
+      if (osBadge) osBadge.textContent = 'Ihr System: macOS (auch für Windows verfügbar)';
     } else if (isWin) {
       dlBtn.href = WIN_URL;
-      if (osBadge) osBadge.textContent = 'Für Windows erkannt (auch für macOS verfügbar)';
+      if (osBadge) osBadge.textContent = 'Ihr System: Windows (auch für macOS verfügbar)';
     } else {
       dlBtn.href = WIN_URL;
     }

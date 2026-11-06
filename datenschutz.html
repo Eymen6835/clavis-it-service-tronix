@@ -9,7 +9,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/styles.css?v=6">
+  <link rel="stylesheet" href="assets/css/styles.css?v=10">
   <script>
     (function(){try{var t=localStorage.getItem('clavis-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </script>
@@ -23,13 +23,13 @@
       <div class="tronix-topbar-left">
         <span class="tronix-topbar-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          IT-Service · Zuverlässig · Vor Ort in Mannheim &amp; 25 km Umkreis
+          IT-Service für Privat und Gewerbe · Mannheim und 25 km Umkreis
         </span>
       </div>
       <div class="tronix-topbar-right">
         <span class="tronix-topbar-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Telefonisch täglich 8 bis 20 Uhr · Termine nach Vereinbarung
+          Telefonisch täglich 8–20 Uhr · Termine nach Vereinbarung
         </span>
         <a class="tronix-topbar-item" href="mailto:kontakt@clavis-itservice.de">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -46,21 +46,81 @@
         <img class="brand-mark" src="assets/img/favicon.svg" alt="" width="44" height="44">
         <span class="brand-text">
           <span class="brand-name">Clavis IT Service</span>
-          <span class="brand-claim">IT-Service · Zuverlässig · Vor Ort</span>
+          <span class="brand-claim">IT-Service in Mannheim</span>
         </span>
       </a>
 
       <nav class="main-nav" id="hauptnavigation" aria-label="Hauptnavigation">
         <a class="nav-link" href="index.html">Start</a>
-        <a class="nav-link" href="geschaeftskunden.html">Unternehmen</a>
-        <a class="nav-link" href="leistungen.html">Privatkunden</a>
+        
+        <div class="nav-group" data-nav-group>
+          <a class="nav-link nav-link--parent" href="geschaeftskunden.html">Unternehmen</a>
+          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="untermenue-unternehmen" aria-label="Untermenü Unternehmen öffnen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-sub" id="untermenue-unternehmen" role="menu">
+            <a class="nav-sub-link" href="check.html">
+              <span class="nav-sub-title">IT-Risiko-Check</span>
+              <span class="nav-sub-desc">Kostenfrei · In 5 Minuten Risiken erkennen</span>
+            </a>
+            <a class="nav-sub-link" href="it-infrastruktur.html">
+              <span class="nav-sub-title">IT-Infrastruktur</span>
+              <span class="nav-sub-desc">Monitoring, Backup, Netzwerk, Support</span>
+            </a>
+            <a class="nav-sub-link" href="ki-automatisierung.html">
+              <span class="nav-sub-title">Automatisierung &amp; KI</span>
+              <span class="nav-sub-desc">Rechnungseingang, DATEV/Lexware, n8n</span>
+            </a>
+            <a class="nav-sub-link" href="webseiten-service.html">
+              <span class="nav-sub-title">Webseiten-Service</span>
+              <span class="nav-sub-desc">Erstellung zum Festpreis, Relaunch, Pflege</span>
+            </a>
+            <a class="nav-sub-link" href="individualsoftware.html">
+              <span class="nav-sub-title">Individualsoftware</span>
+              <span class="nav-sub-desc">Web-Apps, Excel ablösen, Schnittstellen</span>
+            </a>
+            <a class="nav-sub-link" href="erp-jd-edwards.html">
+              <span class="nav-sub-title">ERP: JD Edwards</span>
+              <span class="nav-sub-desc">EnterpriseOne Betreuung &amp; Upgrades</span>
+            </a>
+            <a class="nav-sub-all" href="geschaeftskunden.html">Alle Leistungen für Unternehmen &rarr;</a>
+          </div>
+        </div>
+
+        <div class="nav-group" data-nav-group>
+          <a class="nav-link nav-link--parent" href="leistungen.html">Privatkunden</a>
+          <button class="nav-sub-toggle" type="button" aria-expanded="false" aria-controls="untermenue-privatkunden" aria-label="Untermenü Privatkunden öffnen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="nav-sub" id="untermenue-privatkunden" role="menu">
+            <a class="nav-sub-link" href="pc-laptop-service.html">
+              <span class="nav-sub-title">PC &amp; Laptop Service</span>
+              <span class="nav-sub-desc">Reparatur, Einrichtung, Aufrüstung</span>
+            </a>
+            <a class="nav-sub-link" href="heimnetzwerk-wlan.html">
+              <span class="nav-sub-title">Heimnetzwerk &amp; WLAN</span>
+              <span class="nav-sub-desc">Mesh, Funklochmessung, Verkabelung</span>
+            </a>
+            <a class="nav-sub-link" href="smart-home.html">
+              <span class="nav-sub-title">Smart Home</span>
+              <span class="nav-sub-desc">Beleuchtung, Heizung, Sicherheit</span>
+            </a>
+            <a class="nav-sub-link" href="senioren-it-service.html">
+              <span class="nav-sub-title">Senioren IT-Service</span>
+              <span class="nav-sub-desc">Geduldig, verständlich, direkt zu Hause</span>
+            </a>
+            <a class="nav-sub-all" href="leistungen.html">Alle Leistungen für Privatkunden &rarr;</a>
+          </div>
+        </div>
+
         <a class="nav-link" href="preise.html">Preise</a>
         <a class="nav-link" href="ueber-mich.html">Über mich</a>
         <a class="nav-link" href="fernwartung.html">Fernwartung</a>
         <a class="nav-link" href="kontakt.html">Kontakt</a>
+
         <div class="nav-mobile-cta">
           <a class="btn btn--primary tabular" href="tel:+491626327036">Anrufen: 0162 63270 36</a>
-          <a class="btn btn--whatsapp" href="https://wa.me/491626327036" rel="noopener noreferrer">WhatsApp schreiben</a>
+          <a class="btn btn--whatsapp" href="https://wa.me/491626327036" rel="noopener noreferrer">Per WhatsApp schreiben</a>
         </div>
       </nav>
 
@@ -119,7 +179,7 @@
           <ul>
             <li>keine Cookies und keine Speicherung zu Analyse-, Werbe- oder Wiedererkennungszwecken,</li>
             <li>keine Analyse- oder Tracking-Dienste (kein Google Analytics, kein Matomo, keine Pixel),</li>
-            <li>keine externen Schriftarten, alle Schriften werden vom eigenen Server geladen,</li>
+            <li>keine externen Schriftarten, alle Schriften werden vom Webserver dieser Website geladen,</li>
             <li>keine Karten-, Video- oder Social-Media-Einbindungen,</li>
             <li>kein Kontaktformular, keine Newsletter-Anmeldung, keine Registrierung,</li>
             <li>keine Weitergabe von Daten zu Werbezwecken.</li>
@@ -130,11 +190,12 @@
         <p>Eine einzige Angabe wird lokal in Ihrem Browser abgelegt (localStorage, Eintrag <code>clavis-theme</code>): Ihre Auswahl zwischen heller und dunkler Darstellung. Sie entsteht nur, wenn Sie den Schalter in der Kopfzeile betätigen, und dient allein dazu, die Seite beim nächsten Aufruf so anzuzeigen, wie Sie es eingestellt haben. Sie verlässt Ihr Gerät nicht, wird nicht an mich übertragen und lässt keinen Rückschluss auf Ihre Person zu. Sie können sie jederzeit löschen, indem Sie die Websitedaten in Ihrem Browser entfernen.</p>
 
         <h2>3. Aufruf der Website (Server-Logfiles)</h2>
-        <p>Beim Aufruf dieser Website werden automatisch Daten in sogenannten Server-Logfiles gespeichert, die Ihr Browser übermittelt: IP-Adresse, Datum und Uhrzeit des Zugriffs, Name und URL der abgerufenen Datei, übertragene Datenmenge, Browsertyp und Betriebssystem sowie die zuvor besuchte Seite (Referrer), sofern übermittelt.</p>
-        <p><strong>Kürzung der IP-Adresse:</strong> Die IP-Adresse wird vor dem Speichern gekürzt. Bei IPv4 wird der letzte Zahlenblock durch Null ersetzt, bei IPv6 alles ab dem dritten Block. Aus 192.0.2.77 wird in der Protokolldatei also 192.0.2.0.</p>
+        <p>Beim Aufruf dieser Website speichert der Webserver automatisch Daten, die Ihr Browser übermittelt, in sogenannten Server-Logfiles: IP-Adresse (anonymisiert, siehe unten), Datum und Uhrzeit des Zugriffs, Name und URL der abgerufenen Datei, übertragene Datenmenge, Browsertyp und Betriebssystem sowie die zuvor besuchte Seite (Referrer), sofern übermittelt.</p>
+        <p><strong>Anonymisierung der IP-Adresse:</strong> Nach Angaben meines Hosting-Anbieters Hetzner liegen die IP-Adressen in diesen Logfiles nur in anonymisierter Form vor. Die vollständige IP-Adresse wird dort also nicht gespeichert.</p>
         <p><strong>Zweck und Rechtsgrundlage:</strong> Sicherstellung eines störungsfreien Betriebs, Gewährleistung der Systemsicherheit und Abwehr von Angriffen. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).</p>
-        <p><strong>Speicherdauer:</strong> Die Logfiles werden nach spätestens 30 Tagen gelöscht, sofern sie nicht ausnahmsweise zur Aufklärung eines konkreten Sicherheitsvorfalls länger benötigt werden.</p>
-        <p><strong>Hosting:</strong> Diese Website läuft auf einem Server, den ich bei der Hetzner Online GmbH, Industriestraße 25, 91710 Gunzenhausen, angemietet habe und selbst verwalte. Die Protokolldateien entstehen auf diesem Server. Hetzner stellt die Infrastruktur bereit und verarbeitet die genannten Daten in meinem Auftrag auf Grundlage eines Vertrags zur Auftragsverarbeitung nach Art. 28 DSGVO.</p>
+        <!-- Hinweis: Entspricht der Regel in konsoleH unter Domain → Einstellungen → Accountwartung („Weblogs: Löschen, wenn älter als 1 Monat“). Bei Änderung dort auch hier anpassen. -->
+        <p><strong>Speicherdauer:</strong> Die Logfiles werden nach einem Monat automatisch gelöscht, sofern sie nicht ausnahmsweise zur Aufklärung eines konkreten Sicherheitsvorfalls länger benötigt werden.</p>
+        <p><strong>Hosting:</strong> Diese Website liegt auf einem Webhosting-Paket der Hetzner Online GmbH, Industriestraße 25, 91710 Gunzenhausen, Deutschland. Hetzner betreibt den Webserver, auf dem die Logfiles entstehen, und verarbeitet die genannten Daten in meinem Auftrag auf Grundlage eines Vertrags zur Auftragsverarbeitung nach Art. 28 DSGVO.</p>
 
         <h2>4. Verschlüsselung</h2>
         <p>Diese Website nutzt eine SSL- bzw. TLS-Verschlüsselung, erkennbar am „https://“ in der Adresszeile und am Schloss-Symbol Ihres Browsers. Daten, die Sie an diese Website übermitteln, können dadurch nicht von Dritten mitgelesen werden.</p>
@@ -176,6 +237,7 @@
         <p>Das Programm TeamViewer QuickSupport laden Sie über die Seite „<a href="fernwartung.html">Fernwartung starten</a>“ direkt von den Servern von TeamViewer herunter, nicht von dieser Website. Beim Klick auf den Download-Link übermittelt Ihr Browser dafür Ihre IP-Adresse und technische Browserdaten an TeamViewer.</p>
 
         <h2>8. Empfänger von Daten</h2>
+        <!-- PRÜFEN: Hier steht Microsoft (E-Mail). Der MX-Eintrag der Domain zeigt aber auf Hetzner (www806.your-server.de). Bitte klären, wo das Postfach tatsächlich liegt, und Abschnitt 5.1 sowie diesen Absatz angleichen. -->
         <p>Eine Weitergabe Ihrer Daten findet nur statt, soweit dies zur Vertragserfüllung erforderlich ist oder gesetzliche Vorgaben es verlangen, etwa an das Finanzamt oder an ein Steuerbüro im Rahmen der Buchführung. Außerdem setze ich die oben genannten Dienstleister ein: Hetzner (Server dieser Website), Microsoft (E-Mail), WhatsApp (Nachrichten) und TeamViewer (Fernwartung). Eine Weitergabe zu Werbezwecken erfolgt nicht.</p>
 
         <h2>9. Ihre Rechte</h2>
@@ -213,10 +275,10 @@
             <img class="brand-mark" src="assets/img/favicon.svg" alt="" width="40" height="40">
             <span class="brand-text">
               <span class="brand-name">Clavis IT Service</span>
-              <span class="brand-claim">IT-Service · Zuverlässig · Vor Ort</span>
+              <span class="brand-claim">IT-Service in Mannheim</span>
             </span>
           </a>
-          <p style="margin-top: 1.1rem; font-size: 0.96rem;">Persönlicher IT-Service für Privathaushalte und Unternehmen in Mannheim und Umgebung.</p>
+          <p style="margin-top: 1.1rem; font-size: 0.96rem;">IT-Service für Privathaushalte und kleine Unternehmen in Mannheim und Umgebung – persönlich betreut vom Inhaber.</p>
         </div>
 
         <div>
@@ -226,7 +288,7 @@
             <li>Mannheimer Straße 57a, 68309 Mannheim</li>
             <li><a class="tabular" href="tel:+491626327036">0162 63270 36</a> · <a href="https://wa.me/491626327036" rel="noopener noreferrer">WhatsApp</a></li>
             <li><a href="mailto:kontakt@clavis-itservice.de">kontakt@clavis-itservice.de</a></li>
-            <li style="font-size: 0.88rem;">Telefonisch täglich 8 bis 20 Uhr, Termine nach Vereinbarung</li>
+            <li style="font-size: 0.88rem;">Telefonisch täglich 8–20 Uhr · Termine nach Vereinbarung</li>
           </ul>
         </div>
 
@@ -236,6 +298,8 @@
             <li><a href="index.html">Start</a></li>
             <li><a href="geschaeftskunden.html">Unternehmen</a></li>
             <li><a href="leistungen.html">Privatkunden</a></li>
+            <li><a href="it-infrastruktur.html">IT-Infrastruktur</a></li>
+            <li><a href="webseiten.html">Websites</a></li>
             <li><a href="preise.html">Preise</a></li>
             <li><a href="ueber-mich.html">Über mich</a></li>
             <li><a href="kontakt.html">Kontakt</a></li>
@@ -243,7 +307,7 @@
         </div>
 
         <div>
-          <div class="footer-heading">Service &amp; Recht</div>
+          <div class="footer-heading">Service &amp; Rechtliches</div>
           <ul class="footer-links">
             <li><a href="fernwartung.html">Fernwartung starten</a></li>
             <li><a href="impressum.html">Impressum</a></li>
@@ -253,7 +317,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>Diese Website setzt keine Cookies und verwendet keine Analyse-Werkzeuge.</span>
+        <span>Diese Website setzt keine Cookies und nutzt keine Analyse- oder Tracking-Dienste.</span>
         <span>© 2026 Clavis IT Service · Eymen Kumaru</span>
       </div>
     </div>
@@ -263,6 +327,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <script src="assets/js/main.js?v=6" defer></script>
+  <script src="assets/js/main.js?v=7" defer></script>
 </body>
 </html>
