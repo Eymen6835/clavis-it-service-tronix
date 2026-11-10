@@ -3355,7 +3355,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 }
 
 /* Schwebende Quadrate (Anspielung auf die Mannheimer Quadrate) */
-.home-hero-deco {
+.home-hero-deco { display: none;
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -4008,7 +4008,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
     height: clamp(250px, 44svh, 400px);
     background: linear-gradient(180deg, rgba(5, 16, 40, 0.3) 0%, rgba(5, 16, 40, 0) 26%, rgba(5, 16, 40, 0) 52%, #051028 100%);
   }
-  .home-hero-deco { z-index: 1; height: clamp(250px, 44vh, 400px); inset: 0 0 auto 0; }
+  .home-hero-deco { display: none; z-index: 1; height: clamp(250px, 44vh, 400px); inset: 0 0 auto 0; }
   .home-quad--a { left: 8%; top: 14%; width: 40px; height: 40px; }
   .home-quad--b { right: 9%; top: 22%; }
   .home-quad--c { display: none; }
