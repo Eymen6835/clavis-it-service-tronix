@@ -434,6 +434,147 @@
     });
   }
 
+  /* 9. Abschnitte beim Scrollen sanft einblenden (nur wo [data-reveal] gesetzt ist) */
+  (function () {
+    const groups = document.querySelectorAll('[data-reveal], [data-reveal-stagger]');
+    // Bei reduzierter Bewegung blenden die Inhalte nur ein (siehe CSS), ohne zu gleiten
+    if (!groups.length || !('IntersectionObserver' in window)) return;
+
+    const targets = [];
+    groups.forEach((el) => {
+      if (el.hasAttribute('data-reveal-stagger')) {
+        Array.prototype.forEach.call(el.children, (child, i) => {
+          child.setAttribute('data-reveal', '');
+          child.style.setProperty('--reveal-delay', (Math.min(i, 6) * 0.08).toFixed(2) + 's');
+          targets.push(child);
+        });
+      } else {
+        targets.push(el);
+      }
+    });
+
+    // Nach dem Einblenden wieder die normalen Übergänge (z. B. Hover der Karten) zulassen
+    const finish = (el) => {
+      el.removeAttribute('data-reveal');
+      el.classList.remove('is-revealed');
+      el.style.removeProperty('--reveal-delay');
+    };
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        io.unobserve(el);
+        el.classList.add('is-revealed');
+        el.addEventListener('transitionend', (ev) => {
+          if (ev.target === el && ev.propertyName === 'transform') finish(el);
+        });
+        setTimeout(() => finish(el), 1800);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+
+    root.classList.add('reveal-on');
+    targets.forEach((t) => io.observe(t));
+  })();
+
+  /* 10. Startseite: reduzierte Bewegungsvariante, Zähler, Parallax, Lichtkegel auf Karten */
+  (function () {
+    const mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    const osReduced = !!(mq && mq.matches);
+    const isReduced = () => osReduced || root.classList.contains('motion-reduced');
+
+    // Knopf im Kopfbereich: Bewegung reduzieren und wieder einschalten (gilt für diesen Seitenaufruf)
+    const motionBtn = document.querySelector('.home-hero-toggle');
+    if (motionBtn && !osReduced) {
+      motionBtn.hidden = false;
+      motionBtn.addEventListener('click', () => {
+        const on = root.classList.toggle('motion-reduced');
+        const label = on ? 'Bewegung wieder einschalten' : 'Bewegung reduzieren';
+        motionBtn.setAttribute('aria-pressed', String(on));
+        motionBtn.setAttribute('aria-label', label);
+        motionBtn.title = label;
+      });
+    }
+
+    if (!('IntersectionObserver' in window)) return;
+
+    // Zahlen zählen hoch, sobald sie sichtbar werden
+    const counters = document.querySelectorAll('[data-count]');
+    if (counters.length && !osReduced) {
+      const run = (el) => {
+        const target = parseInt(el.getAttribute('data-count'), 10) || 0;
+        if (!target || isReduced()) return;
+        const t0 = performance.now();
+        const step = (now) => {
+          const p = Math.min(1, (now - t0) / 1400);
+          el.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          if (p < 1) requestAnimationFrame(step);
+        };
+        el.textContent = '0';
+        requestAnimationFrame(step);
+      };
+      const seen = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          seen.unobserve(entry.target);
+          run(entry.target);
+        });
+      }, { threshold: 0.5 });
+      counters.forEach((c) => seen.observe(c));
+    }
+
+    // Parallax: Ebenen mit [data-parallax] bewegen sich beim Scrollen leicht versetzt.
+    // Nur mit Maus/Trackpad; auf Touch-Geräten bleibt die Seite ruhig und flüssig.
+    const layers = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+    const finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (layers.length && !osReduced && finePointer) {
+      const hosts = new Map();
+      layers.forEach((el) => {
+        const host = el.closest('section') || el.parentElement;
+        if (!hosts.has(host)) hosts.set(host, { visible: false, layers: [] });
+        hosts.get(host).layers.push({ el, speed: parseFloat(el.getAttribute('data-parallax')) || 0 });
+      });
+      let ticking = false;
+      const apply = () => {
+        ticking = false;
+        if (isReduced()) return;
+        const mid = window.innerHeight / 2;
+        hosts.forEach((h, host) => {
+          if (!h.visible) return;
+          const r = host.getBoundingClientRect();
+          const d = r.top + r.height / 2 - mid;
+          h.layers.forEach((l) => l.el.style.setProperty('--py', (d * l.speed).toFixed(1) + 'px'));
+        });
+      };
+      const request = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(apply);
+      };
+      const inView = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const h = hosts.get(entry.target);
+          if (h) h.visible = entry.isIntersecting;
+        });
+        request();
+      });
+      hosts.forEach((_, host) => inView.observe(host));
+      window.addEventListener('scroll', request, { passive: true });
+      window.addEventListener('resize', request, { passive: true });
+    }
+
+    // Lichtkegel auf Karten folgt dem Mauszeiger
+    if (finePointer && document.body.classList.contains('page-home')) {
+      document.addEventListener('pointermove', (e) => {
+        const card = e.target && e.target.closest ? e.target.closest('.card') : null;
+        if (!card) return;
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left).toFixed(0) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top).toFixed(0) + 'px');
+      }, { passive: true });
+    }
+  })();
+
   /* 8. Seiten vorab laden: Der Klick auf einen internen Link öffnet die Seite ohne Wartezeit */
   (function () {
     const internal = (a) => a && a.origin === location.origin && a.pathname !== location.pathname &&

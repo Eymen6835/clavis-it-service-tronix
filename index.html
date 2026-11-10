@@ -15,8 +15,7 @@
   <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/img/hero-workspace.webp" as="image" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="assets/css/styles.css?v=15">
+  <link rel="stylesheet" href="assets/css/styles.css?v=22">
   <script>
     (function(){try{var t=localStorage.getItem('clavis-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </script>
@@ -49,7 +48,7 @@
   }
   </script>
 </head>
-<body class="has-mobile-cta">
+<body class="has-mobile-cta page-home">
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
 
   <!-- Tronix Top Bar -->
@@ -180,84 +179,120 @@
   </header>
 
   <main id="inhalt">
-    <!-- 1. Kopfbereich -->
-    <section class="tronix-hero" style="background-image: url('assets/img/hero-workspace.webp');">
-      <div class="container">
-        <div class="tronix-hero-grid">
-          <div>
-            <div class="tronix-slide-kicker">IT-Service in Mannheim · für Betriebe und Zuhause</div>
-            <h1>IT-Hilfe in Mannheim – für Ihren Betrieb und für zu Hause.</h1>
-            <p class="lead">Der Laptop fährt nicht mehr hoch, das WLAN reicht nicht bis ins Büro oder das neue Smartphone soll eingerichtet werden? Rufen Sie an und schildern Sie kurz das Problem. Sie sprechen dabei direkt mit mir. Ich helfe per Fernwartung oder komme zu Ihnen.</p>
+    <!-- 1. Kopfbereich: Luftbild von Mannheim -->
+    <section class="home-hero" data-home-hero>
+      <div class="home-hero-media" data-parallax="-0.16">
+        <div class="home-hero-stage">
+        <picture>
 
-            <div class="action-row">
-              <a class="btn btn--primary tabular" href="tel:+491626327036">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                Anrufen: 0162 63270 36
-              </a>
-              <a class="btn btn--whatsapp" href="https://wa.me/491626327036" rel="noopener noreferrer">Per WhatsApp schreiben</a>
-            </div>
+          <img class="home-hero-img" src="assets/img/mannheim-luftbild-1376.webp" srcset="assets/img/mannheim-luftbild-640.webp 640w, assets/img/mannheim-luftbild-960.webp 960w, assets/img/mannheim-luftbild-1376.webp 1376w" sizes="(max-width: 860px) 120vw, 100vw" width="1376" height="768" alt="Luftbild von Mannheim: der Wasserturm am Friedrichsplatz, dahinter die Augustaanlage und die Innenstadt" fetchpriority="high" decoding="async">
+        </picture>
+        <!-- IT-Ebene: Netzwerkknoten, Datenpakete, Statusmeldungen (assets/js/home-net.js) -->
+        <canvas class="home-net" aria-hidden="true"></canvas>
+        </div>
+      </div>
+      <div class="home-hero-shade" aria-hidden="true"></div>
 
-            <p class="hero-facts">Telefonisch täglich 8–20 Uhr · Anfahrt in Mannheim kostenlos · Fernwartung ohne Anfahrt</p>
+      <div class="home-hero-deco" aria-hidden="true">
+        <span class="home-quad home-quad--a" data-parallax="0.1"></span>
+        <span class="home-quad home-quad--b" data-parallax="0.2"></span>
+        <span class="home-quad home-quad--c" data-parallax="0.06"></span>
+      </div>
 
-            <div class="hero-quick-routes" aria-label="Direkt zum passenden Angebot">
-              <a href="#unternehmen">Für Unternehmen · ab 249 € netto/Monat <span aria-hidden="true">→</span></a>
-              <a href="#privathaushalte">Für Privathaushalte · 49 €/Std. <span aria-hidden="true">→</span></a>
+      <div class="container home-hero-inner">
+        <div class="home-hero-copy">
+          <p class="home-kicker home-anim" style="--d: 0.05s"><span class="home-kicker-dot" aria-hidden="true"></span>Clavis IT Service · Mannheim</p>
+          <h1 class="home-title">
+            <span class="home-title-line"><span style="--d: 0.15s">IT-Hilfe in Mannheim.</span></span>
+            <span class="home-title-line"><span class="home-title-accent" style="--d: 0.28s">Persönlich und vor Ort.</span></span>
+          </h1>
+          <p class="home-lead home-anim" style="--d: 0.45s">Computer, WLAN, E-Mail oder die gesamte IT Ihres Betriebs: Sie sprechen direkt mit mir. Ich helfe per Fernwartung oder komme zu Ihnen – nach Hause oder ins Büro.</p>
+
+          <div class="home-cta home-anim" style="--d: 0.58s">
+            <a class="btn btn--primary tabular" href="tel:+491626327036">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Anrufen: 0162 63270 36
+            </a>
+            <a class="btn btn--whatsapp" href="https://wa.me/491626327036" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              Per WhatsApp schreiben
+            </a>
+          </div>
+          <p class="home-note home-anim" style="--d: 0.68s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Die Erstberatung am Telefon ist kostenlos.</p>
+
+          <div class="home-routes home-anim" style="--d: 0.8s">
+            <a class="home-route" href="#unternehmen">
+              <span class="home-route-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+              <span class="home-route-text"><strong>Für Unternehmen</strong><small>ab 249 € netto im Monat</small></span>
+              <span class="home-route-arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="home-route" href="#privathaushalte">
+              <span class="home-route-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+              <span class="home-route-text"><strong>Für Privathaushalte</strong><small>49 € pro Stunde inkl. MwSt.</small></span>
+              <span class="home-route-arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="home-hero-float">
+          <div class="home-chip home-chip--a" data-parallax="0.08">
+            <div class="home-chip-in" style="--d: 1s">
+              <span class="home-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <span><strong>0 € Anfahrt</strong>im Stadtgebiet Mannheim</span>
             </div>
           </div>
-
-          <div class="tronix-hero-card">
-            <div class="tronix-hero-card-title">Mit dem Smartphone anrufen</div>
-            <div class="tronix-hero-card-qr">
-              <img src="assets/img/qr-tel.svg" alt="QR-Code zum direkten Anrufen von 0162 63270 36" width="146" height="146">
+          <div class="home-chip home-chip--b" data-parallax="0.15">
+            <div class="home-chip-in" style="--d: 1.18s">
+              <span class="home-chip-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
+              <span><strong>Täglich 8–20 Uhr</strong>telefonisch erreichbar</span>
             </div>
-            <div class="tronix-hero-card-phone">0162 63270 36</div>
-            <div class="tronix-hero-card-sub">Täglich von 8 bis 20 Uhr</div>
+          </div>
+          <div class="home-qr" data-parallax="0.05">
+            <div class="home-qr-in" style="--d: 1.36s">
+              <div class="home-qr-title">Scannen und anrufen</div>
+              <img src="assets/img/qr-tel.svg" alt="QR-Code zum direkten Anrufen von 0162 63270 36" width="104" height="104">
+              <div class="home-qr-num tabular">0162 63270 36</div>
+            </div>
           </div>
         </div>
       </div>
+
+      <button class="home-hero-toggle" type="button" aria-pressed="false" aria-label="Bewegung reduzieren" title="Bewegung reduzieren" hidden>
+        <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
+      </button>
     </section>
 
-    <!-- 2. Eckdaten -->
-    <section class="tronix-counter-band" aria-label="Eckdaten auf einen Blick">
+    <!-- 2. Eckdaten (Vertrauenssignale) -->
+    <section class="home-trust" aria-label="Eckdaten auf einen Blick">
       <div class="container">
-        <div class="tronix-counter-grid">
-          <div class="tronix-counter-item">
-            <span class="tronix-counter-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </span>
+        <div class="home-trust-card" data-reveal>
+          <div class="home-stat">
+            <span class="home-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
             <div>
-              <div class="tronix-counter-num">0 €</div>
-              <div class="tronix-counter-label">Anfahrt im Stadtgebiet Mannheim</div>
+              <div class="home-stat-num">0 €</div>
+              <div class="home-stat-label">Anfahrt im Stadtgebiet Mannheim</div>
             </div>
           </div>
-
-          <div class="tronix-counter-item">
-            <span class="tronix-counter-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </span>
+          <div class="home-stat">
+            <span class="home-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
             <div>
-              <div class="tronix-counter-num">8–20 Uhr</div>
-              <div class="tronix-counter-label">Täglich telefonisch erreichbar</div>
+              <div class="home-stat-num">8–<span data-count="20">20</span> Uhr</div>
+              <div class="home-stat-label">Täglich telefonisch erreichbar</div>
             </div>
           </div>
-
-          <div class="tronix-counter-item">
-            <span class="tronix-counter-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V9.5z"/></svg>
-            </span>
+          <div class="home-stat">
+            <span class="home-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
             <div>
-              <div class="tronix-counter-num">49 €</div>
-              <div class="tronix-counter-label">Pro Stunde für Privatkunden, inkl. MwSt.</div>
+              <div class="home-stat-num"><span data-count="49">49</span> €</div>
+              <div class="home-stat-label">Pro Stunde für Privatkunden, inkl. MwSt.</div>
             </div>
           </div>
-
-          <div class="tronix-counter-item">
-            <span class="tronix-counter-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            </span>
+          <div class="home-stat">
+            <span class="home-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
             <div>
-              <div class="tronix-counter-num">ab 249 €</div>
-              <div class="tronix-counter-label">Wartungsvertrag für Betriebe, netto im Monat</div>
+              <div class="home-stat-num">ab <span data-count="249">249</span> €</div>
+              <div class="home-stat-label">Wartungsvertrag für Betriebe, netto im Monat</div>
             </div>
           </div>
         </div>
@@ -265,24 +300,30 @@
     </section>
 
     <!-- 3. Für Unternehmen -->
-    <section class="section" id="unternehmen">
+    <section class="section home-offers" id="unternehmen">
       <div class="container">
-        <div class="section-header section-header--center">
-          <div class="tronix-sub-badge tronix-sub-badge--center">Für Unternehmen</div>
-          <h2>Ihre IT in festen Händen – zum festen Monatspreis</h2>
-          <p>Praxen, Kanzleien, Handwerksbetriebe und Büros mit bis zu 10 Arbeitsplätzen haben selten eigene IT-Fachleute. Diese Aufgabe übernehme ich: regelmäßig, mit einem festen Ansprechpartner und im Wartungsvertrag zu einem festen Monatsbetrag.</p>
+        <div class="home-split-head" data-reveal>
+          <div>
+            <div class="tronix-sub-badge">Für Unternehmen</div>
+            <h2>Ihre IT in festen Händen – zum festen Monatspreis</h2>
+          </div>
+          <div>
+            <p>Praxen, Kanzleien, Handwerksbetriebe und Büros mit bis zu 10 Arbeitsplätzen haben selten eigene IT-Fachleute. Diese Aufgabe übernehme ich: regelmäßig, mit einem festen Ansprechpartner und im Wartungsvertrag zu einem festen Monatsbetrag.</p>
+            <span class="audience-price-tag">ab 249 € netto/Monat</span>
+          </div>
         </div>
 
-        <div class="grid-3">
+        <div class="grid-3" data-reveal-stagger>
           <a class="card card-link" href="geschaeftskunden.html#wartungsvertrag">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
             <div class="card-kicker">Laufende Betreuung</div>
             <h3>IT-Betreuung im Wartungsvertrag</h3>
             <p>Regelmäßige Wartung, Updates und Hilfe bei Störungen – per Fernwartung oder vor Ort. Kunden mit Wartungsvertrag haben bei mir Vorrang.</p>
-            <span class="audience-price-tag">ab 249 € netto/Monat</span>
             <span class="card-more">Zum Wartungsvertrag <span aria-hidden="true">→</span></span>
           </a>
 
           <a class="card card-link" href="it-infrastruktur.html">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
             <div class="card-kicker">Einrichtung</div>
             <h3>Arbeitsplätze &amp; Netzwerk</h3>
             <p>Neue Computer vollständig einrichten, Router und WLAN für alle Räume, Drucker und Scanner im Netzwerk – auf Wunsch mit eigenem Gast-WLAN.</p>
@@ -290,6 +331,7 @@
           </a>
 
           <a class="card card-link" href="geschaeftskunden.html#datensicherung">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></span>
             <div class="card-kicker">Schutz</div>
             <h3>Datensicherung &amp; Sicherheit</h3>
             <p>Automatische, verschlüsselte Sicherungen mit regelmäßiger Test-Wiederherstellung, zentral verwalteter Virenschutz und klare Zugriffsrechte.</p>
@@ -297,6 +339,7 @@
           </a>
 
           <a class="card card-link" href="geschaeftskunden.html#microsoft-365">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
             <div class="card-kicker">Zusammenarbeit</div>
             <h3>Microsoft 365 &amp; E-Mail</h3>
             <p>Postfächer, Kalender und gemeinsame Ordner verwalten, Daten aus älteren Systemen übernehmen und Ihrem Team zeigen, wie alles funktioniert.</p>
@@ -304,6 +347,7 @@
           </a>
 
           <a class="card card-link" href="geschaeftskunden.html#zeiterfassung">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
             <div class="card-kicker">Verwaltung</div>
             <h3>Zeiterfassung &amp; E-Rechnung</h3>
             <p>Digitale Arbeitszeiterfassung einrichten und Ihre Software für XRechnung und ZUGFeRD vorbereiten – abgestimmt mit Lohn- und Steuerbüro.</p>
@@ -311,6 +355,7 @@
           </a>
 
           <a class="card card-link" href="webseiten-service.html">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
             <div class="card-kicker">Projekt</div>
             <h3>Websites für Unternehmen</h3>
             <p>Schlanke Firmen-Websites, die schnell laden, auf dem Smartphone gut lesbar sind und Impressum sowie Datenschutzerklärung enthalten.</p>
@@ -318,7 +363,7 @@
           </a>
         </div>
 
-        <div class="home-actions">
+        <div class="home-actions" data-reveal>
           <a class="btn btn--primary" href="geschaeftskunden.html">Alle Leistungen für Unternehmen</a>
           <a class="btn btn--secondary" href="geschaeftskunden.html#rechner">Monatspreis berechnen</a>
         </div>
@@ -327,16 +372,22 @@
     </section>
 
     <!-- 4. Für Privathaushalte -->
-    <section class="section section--subtle" id="privathaushalte">
+    <section class="section section--subtle home-offers" id="privathaushalte">
       <div class="container">
-        <div class="section-header section-header--center">
-          <div class="tronix-sub-badge tronix-sub-badge--center">Für Privathaushalte und Senioren</div>
-          <h2>Technik zu Hause – in Ruhe erklärt</h2>
-          <p>Ich komme zu Ihnen nach Hause – Sie müssen Ihren Computer nirgendwo hinbringen. Sie zahlen 49 € pro Stunde inklusive Mehrwertsteuer. Nach der ersten Stunde rechne ich in Schritten von 15 Minuten ab.</p>
+        <div class="home-split-head" data-reveal>
+          <div>
+            <div class="tronix-sub-badge">Für Privathaushalte und Senioren</div>
+            <h2>Technik zu Hause – in Ruhe erklärt</h2>
+          </div>
+          <div>
+            <p>Ich komme zu Ihnen nach Hause – Sie müssen Ihren Computer nirgendwo hinbringen. Sie zahlen 49 € pro Stunde inklusive Mehrwertsteuer. Nach der ersten Stunde rechne ich in Schritten von 15 Minuten ab.</p>
+            <span class="audience-price-tag">49 € pro Stunde inkl. MwSt.</span>
+          </div>
         </div>
 
-        <div class="grid-4">
+        <div class="grid-4" data-reveal-stagger>
           <a class="card card-link" href="leistungen.html#einrichtung">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span>
             <div class="card-kicker">Einrichtung</div>
             <h3>Neue Geräte</h3>
             <p>Computer, Laptop, Tablet, Smartphone, Drucker oder Fernseher: startklar eingerichtet, die E-Mail auf allen Geräten inklusive.</p>
@@ -344,6 +395,7 @@
           </a>
 
           <a class="card card-link" href="pc-laptop-service.html">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
             <div class="card-kicker">Reparatur</div>
             <h3>Reparatur &amp; Aufrüstung</h3>
             <p>Fehler finden und beheben, mehr Tempo durch SSD und Arbeitsspeicher, Reinigung bei lauten oder heißen Geräten.</p>
@@ -351,6 +403,7 @@
           </a>
 
           <a class="card card-link" href="heimnetzwerk-wlan.html">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg></span>
             <div class="card-kicker">Tempo</div>
             <h3>WLAN &amp; langsame Geräte</h3>
             <p>Schwaches WLAN verbessern, Router einrichten, langsame Geräte aufräumen und fehlende Updates nachholen.</p>
@@ -358,6 +411,7 @@
           </a>
 
           <a class="card card-link" href="senioren-it-service.html">
+            <span class="home-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
             <div class="card-kicker">In Ruhe</div>
             <h3>Hilfe für Senioren</h3>
             <p>Smartphone, Tablet und Computer in Ihrem Tempo üben – mit Anleitungen zum Nachlesen und Tipps gegen Betrugsversuche.</p>
@@ -365,7 +419,7 @@
           </a>
         </div>
 
-        <div class="fee-strip" aria-label="Anfahrtskosten">
+        <div class="fee-strip" aria-label="Anfahrtskosten" data-reveal>
           <div class="fee-strip-head">Anfahrt<span>inkl. MwSt.</span></div>
           <div class="fee-strip-item"><span class="fee-strip-place">Mannheim</span><span class="fee-strip-value">0 €</span></div>
           <div class="fee-strip-item"><span class="fee-strip-place">bis 10 km</span><span class="fee-strip-value">10 €</span></div>
@@ -373,7 +427,7 @@
           <div class="fee-strip-item"><span class="fee-strip-place">Fernwartung</span><span class="fee-strip-value">keine Anfahrt</span></div>
         </div>
 
-        <div class="home-actions">
+        <div class="home-actions" data-reveal>
           <a class="btn btn--primary" href="leistungen.html">Alle Leistungen für Privatkunden</a>
           <a class="btn btn--secondary" href="preise.html">Preise im Detail</a>
         </div>
@@ -381,26 +435,51 @@
       </div>
     </section>
 
-    <!-- 5. IT-Service in Mannheim -->
-    <section class="section">
-      <div class="container container--narrow">
-        <div class="tronix-sub-badge">Aus Mannheim-Käfertal</div>
-        <h2>IT-Service in Mannheim: persönlich und aus der Nähe</h2>
-        <p>Wenn der Computer streikt, möchten Sie nicht in einer Warteschleife landen, sondern mit jemandem sprechen, der das Problem löst. Bei Clavis IT Service sprechen Sie deshalb immer direkt mit mir – am Telefon, per WhatsApp oder bei einem Termin vor Ort.</p>
-        <p>Für Unternehmen übernehme ich die laufende IT: Arbeitsplätze, Netzwerk, E-Mail, Datensicherung und Sicherheit. Im Wartungsvertrag zahlen Sie einen festen Monatsbetrag und haben einen Ansprechpartner, der Ihre Systeme kennt.</p>
-        <p>Für Privathaushalte komme ich ins Haus: in Käfertal und allen anderen Mannheimer Stadtteilen ohne Anfahrtskosten, im Umkreis von 25 Kilometern – etwa in Viernheim, Ladenburg, Heidelberg oder Weinheim – gegen eine kleine Pauschale. Vieles lässt sich auch per Fernwartung erledigen, dann fällt gar keine Anfahrt an.</p>
+    <!-- 5. Typische Anliegen -->
+    <!-- PRÜFEN: Das sind Beispiele für typische Anfragen, keine Kundenstimmen. Echte Referenzen oder Bewertungen
+         können hier ergänzt werden, sobald Kunden ihr Einverständnis gegeben haben. -->
+    <section class="section home-cases">
+      <div class="container">
+        <div class="section-header section-header--center" data-reveal>
+          <div class="tronix-sub-badge tronix-sub-badge--center">Aus dem Alltag</div>
+          <h2>Typische Anliegen – und wie ich helfe</h2>
+          <p>Drei Beispiele für Anfragen, wie sie häufig vorkommen. Ihr Anliegen ist nicht dabei? Rufen Sie einfach an, ich sage Ihnen ehrlich, ob ich helfen kann.</p>
+        </div>
+
+        <div class="grid-3" data-reveal-stagger>
+          <article class="card home-case">
+            <span class="home-case-tag">Typische Anfrage · Privathaushalt</span>
+            <p class="home-case-quote">„Der Laptop fährt nicht mehr hoch.“</p>
+            <p>Ich suche den Fehler und behebe ihn bei Ihnen zu Hause. Lohnt sich die Reparatur nicht mehr, richte ich ein neues Gerät startklar ein.</p>
+            <a class="card-more" href="pc-laptop-service.html">PC &amp; Laptop Service <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="card home-case">
+            <span class="home-case-tag">Typische Anfrage · Betrieb</span>
+            <p class="home-case-quote">„Das WLAN reicht nicht bis ins hintere Büro.“</p>
+            <p>Ich richte Router und WLAN so ein, dass alle Räume versorgt sind – auf Wunsch mit eigenem Gast-WLAN. Die Bestandsaufnahme vor Ort ist kostenlos.</p>
+            <a class="card-more" href="it-infrastruktur.html">IT-Infrastruktur <span aria-hidden="true">→</span></a>
+          </article>
+
+          <article class="card home-case">
+            <span class="home-case-tag">Typische Anfrage · Senioren</span>
+            <p class="home-case-quote">„Ich möchte mein neues Smartphone verstehen.“</p>
+            <p>Wir üben in Ihrem Tempo. Sie bekommen eine Anleitung zum Nachlesen und Tipps, wie Sie Betrugsversuche erkennen.</p>
+            <a class="card-more" href="senioren-it-service.html">Senioren IT-Service <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
       </div>
     </section>
 
     <!-- 6. Ablauf -->
     <section class="section section--subtle">
       <div class="container">
-        <div class="section-header section-header--center">
+        <div class="section-header section-header--center" data-reveal>
           <div class="tronix-sub-badge tronix-sub-badge--center">So läuft es ab</div>
           <h2>Vom ersten Anruf zur Lösung</h2>
         </div>
 
-        <div class="steps-grid">
+        <div class="steps-grid" data-reveal-stagger>
           <div class="step-card">
             <span class="step-num" aria-hidden="true">01</span>
             <h3>Anliegen schildern</h3>
@@ -426,7 +505,7 @@
     <section class="section">
       <div class="container">
         <div class="tronix-about-split">
-          <div class="tronix-collage">
+          <div class="tronix-collage" data-reveal>
             <div class="tronix-collage-stack">
               <img src="assets/img/business-office.webp" alt="Helle Büroräume mit verglasten Einzelbüros" width="260" height="215" loading="lazy" decoding="async">
               <!-- PRÜFEN: Bild seniors-tablet.webp zeigt zwei jüngere Frauen im Gespräch, keine Senioren und kein Tablet. Ggf. passenderes Foto wählen. -->
@@ -441,7 +520,7 @@
             </a>
           </div>
 
-          <div>
+          <div data-reveal>
             <div class="tronix-sub-badge">Wer dahintersteht</div>
             <h2>Eymen Kumaru – Ihr Ansprechpartner</h2>
             <!-- PRÜFEN: Hier können Berufserfahrung (Jahre) und Qualifikationen ergänzt werden, sobald bestätigt. -->
@@ -488,79 +567,54 @@
       </div>
     </section>
 
-    <!-- 8. Kontakt -->
-    <section class="section section--subtle" id="kontakt">
+    <!-- 8. IT-Service in Mannheim -->
+    <section class="section section--subtle">
+      <div class="container container--narrow" data-reveal>
+        <div class="tronix-sub-badge">Aus Mannheim-Käfertal</div>
+        <h2>IT-Service in Mannheim: persönlich und aus der Nähe</h2>
+        <p>Wenn der Computer streikt, möchten Sie nicht in einer Warteschleife landen, sondern mit jemandem sprechen, der das Problem löst. Bei Clavis IT Service sprechen Sie deshalb immer direkt mit mir – am Telefon, per WhatsApp oder bei einem Termin vor Ort.</p>
+        <p>Für Unternehmen übernehme ich die laufende IT: Arbeitsplätze, Netzwerk, E-Mail, Datensicherung und Sicherheit. Im Wartungsvertrag zahlen Sie einen festen Monatsbetrag und haben einen Ansprechpartner, der Ihre Systeme kennt.</p>
+        <p>Für Privathaushalte komme ich ins Haus: in Käfertal und allen anderen Mannheimer Stadtteilen ohne Anfahrtskosten, im Umkreis von 25 Kilometern – etwa in Viernheim, Ladenburg, Heidelberg oder Weinheim – gegen eine kleine Pauschale. Vieles lässt sich auch per Fernwartung erledigen, dann fällt gar keine Anfahrt an.</p>
+      </div>
+    </section>
+
+    <!-- 9. Abschluss: Kontakt -->
+    <section class="home-final" id="kontakt">
       <div class="container">
-        <div class="section-header section-header--center">
-          <div class="tronix-sub-badge tronix-sub-badge--center">Kontakt</div>
+        <div class="home-final-card" data-reveal="zoom">
+          <div class="home-final-media" data-parallax="-0.12" aria-hidden="true">
+            <picture>
+
+              <img src="assets/img/mannheim-luftbild-960.webp" srcset="assets/img/mannheim-luftbild-960.webp 960w, assets/img/mannheim-luftbild-1376.webp 1376w" sizes="(max-width: 860px) 120vw, 1220px" width="960" height="536" alt="" loading="lazy" decoding="async">
+            </picture>
+          </div>
+
+          <div class="tronix-sub-badge tronix-sub-badge--light tronix-sub-badge--center">Kontakt</div>
           <h2>Sprechen wir über Ihr Anliegen</h2>
           <p>Oft lässt sich schon am Telefon klären, ob eine Fernwartung reicht oder ob ich vorbeikomme. Die Erstberatung am Telefon ist kostenlos.</p>
+
+          <div class="home-cta home-cta--center">
+            <a class="btn btn--white-pill tabular" href="tel:+491626327036">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Anrufen: 0162 63270 36
+            </a>
+            <a class="btn btn--whatsapp" href="https://wa.me/491626327036" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+              WhatsApp öffnen
+            </a>
+            <a class="btn btn--outline-light" href="mailto:kontakt@clavis-itservice.de">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              E-Mail schreiben
+            </a>
+          </div>
+
+          <ul class="home-final-facts">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Telefonisch täglich 8–20 Uhr</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Vor Ort nach Vereinbarung</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Mannheimer Straße 57a, 68309 Mannheim</li>
+          </ul>
+          <p class="home-final-area">Vor-Ort-Service in Mannheim und Umgebung, unter anderem in Viernheim, Ladenburg, Heidelberg, Weinheim, Bensheim und Heppenheim. <a href="kontakt.html">Alle Kontaktwege <span aria-hidden="true">→</span></a></p>
         </div>
-
-        <div class="grid-4">
-          <div class="contact-card">
-            <div>
-              <div class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div class="contact-card-kicker">Telefon</div>
-              <div><a class="contact-card-main tabular" href="tel:+491626327036">0162 63270 36</a></div>
-              <p style="margin-top: 0.65rem;">Der schnellste Weg – täglich von 8 bis 20 Uhr.</p>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a class="btn btn--primary btn--sm tabular" href="tel:+491626327036">Jetzt anrufen</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div>
-              <div class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-              </div>
-              <div class="contact-card-kicker">WhatsApp</div>
-              <div><a class="contact-card-main" href="https://wa.me/491626327036" rel="noopener noreferrer" style="color: var(--whatsapp-text);">Nachricht schreiben</a></div>
-              <p style="margin-top: 0.65rem;">Gut für kurze Fragen und Fotos, etwa von einer Fehlermeldung.</p>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a class="btn btn--whatsapp btn--sm" href="https://wa.me/491626327036" rel="noopener noreferrer">WhatsApp öffnen</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div>
-              <div class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </div>
-              <div class="contact-card-kicker">E-Mail</div>
-              <div><a class="contact-card-main contact-card-main--small" href="mailto:kontakt@clavis-itservice.de">kontakt@clavis-itservice.de</a></div>
-              <p style="margin-top: 0.65rem;">Für ausführliche Beschreibungen und Angebotsanfragen.</p>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a class="btn btn--secondary btn--sm" href="mailto:kontakt@clavis-itservice.de">E-Mail schreiben</a>
-            </div>
-          </div>
-
-          <div class="contact-card">
-            <div>
-              <div class="card-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <div class="contact-card-kicker">Erreichbarkeit</div>
-              <ul class="home-hours">
-                <li><span>Telefonisch</span><span>täglich 8–20 Uhr</span></li>
-                <li><span>Vor Ort</span><span>nach Vereinbarung</span></li>
-              </ul>
-              <p style="margin-top: 0.65rem;">Clavis IT Service<br>Mannheimer Straße 57a<br>68309 Mannheim</p>
-            </div>
-            <div style="margin-top: 1.5rem;">
-              <a class="btn btn--secondary btn--sm" href="kontakt.html">Alle Kontaktwege</a>
-            </div>
-          </div>
-        </div>
-
-        <p style="margin-top: 2rem; font-size: 0.95rem; color: var(--text-muted); text-align: center;">
-          Vor-Ort-Service in Mannheim und Umgebung, unter anderem in Viernheim, Ladenburg, Heidelberg, Weinheim, Bensheim und Heppenheim.
-        </p>
       </div>
     </section>
   </main>
@@ -641,6 +695,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <script src="assets/js/main.js?v=9" defer></script>
+  <script src="assets/js/main.js?v=11" defer></script>
+  <script src="assets/js/home-net.js?v=3" defer></script>
 </body>
 </html>

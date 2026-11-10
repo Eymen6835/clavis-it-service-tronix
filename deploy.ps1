@@ -10,7 +10,7 @@
 # verdeckt abgefragt und nirgends gespeichert.
 #
 # Was das Skript zusätzlich erledigt:
-# - Versionsnummern von styles.css und main.js (?v=...) werden im Upload-Ordner
+# - Versionsnummern aller CSS- und JS-Dateien (?v=...) werden im Upload-Ordner
 #   automatisch aus dem Dateiinhalt berechnet. Besucher bekommen dadurch nach
 #   jeder Änderung sofort die neue Fassung, obwohl der Browser die Dateien
 #   lange zwischenspeichern darf.
@@ -44,13 +44,10 @@ Get-ChildItem -Path $PSScriptRoot -File -Force |
     Copy-Item -Destination $source
 Copy-Item -Path (Join-Path $PSScriptRoot 'assets') -Destination $source -Recurse
 
-# Versionsnummern (?v=...) aus dem Inhalt von styles.css und main.js berechnen
+# Versionsnummern (?v=...) aus dem Inhalt aller CSS- und JS-Dateien berechnen
 $stamps = @{}
-foreach ($asset in @('assets\css\styles.css', 'assets\js\main.js')) {
-    $assetPath = Join-Path $source $asset
-    if (Test-Path $assetPath) {
-        $stamps[[IO.Path]::GetFileName($asset)] = (Get-FileHash -Path $assetPath -Algorithm SHA1).Hash.Substring(0, 8).ToLower()
-    }
+Get-ChildItem -Path (Join-Path $source 'assets') -Recurse -File -Include '*.css', '*.js' | ForEach-Object {
+    $stamps[$_.Name] = (Get-FileHash -Path $_.FullName -Algorithm SHA1).Hash.Substring(0, 8).ToLower()
 }
 Get-ChildItem -Path $source -Filter '*.html' -File | ForEach-Object {
     $text = [IO.File]::ReadAllText($_.FullName, $utf8)

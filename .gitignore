@@ -8,3 +8,6 @@ upload/
 
 # Sicherungskopien der Server-.htaccess (legt deploy.ps1 an)
 htaccess-server-backup-*.txt
+
+# Nur lokal: Vorschaubilder mit Wasserzeichen, nicht hochladen, nicht committen
+_lokal/
