@@ -14,7 +14,8 @@
   <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
   <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/styles.css?v=14">
+  <link rel="preload" href="assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/styles.css?v=15">
   <script>
     (function(){try{var t=localStorage.getItem('clavis-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </script>
@@ -382,7 +383,7 @@
 
           <div class="cta-qr-card">
             <div class="cta-qr-caption">Scannen und anrufen</div>
-            <img src="assets/img/qr-tel.svg" alt="QR-Code für Anruf an 0162 63270 36" width="128" height="128">
+            <img src="assets/img/qr-tel.svg" alt="QR-Code für Anruf an 0162 63270 36" width="128" height="128" loading="lazy" decoding="async">
             <div class="cta-qr-phone">0162 63270 36</div>
           </div>
         </div>
@@ -465,6 +466,6 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
 
-  <script src="assets/js/main.js?v=8" defer></script>
+  <script src="assets/js/main.js?v=9" defer></script>
 </body>
 </html>

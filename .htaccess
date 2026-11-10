@@ -1,0 +1,56 @@
+# Clavis IT Service - Auslieferung beschleunigen
+# Diese Datei wird von deploy.ps1 mit hochgeladen (nach public_html).
+# Alle Bloecke sind mit <IfModule> abgesichert: Fehlt ein Modul auf dem
+# Server, wird der Block einfach uebersprungen und die Website laeuft weiter.
+
+# --- Dateitypen sauber benennen ---------------------------------------------
+<IfModule mod_mime.c>
+  AddType image/webp .webp
+  AddType font/woff2 .woff2
+  AddType image/svg+xml .svg
+</IfModule>
+
+# --- Textdateien komprimiert senden (HTML, CSS, JS, SVG) ---------------------
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json application/xml text/xml text/plain image/svg+xml
+</IfModule>
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json application/xml text/xml text/plain image/svg+xml
+</IfModule>
+
+# --- Zwischenspeicher im Browser ---------------------------------------------
+# HTML: immer kurz beim Server nachfragen, damit Aenderungen sofort sichtbar sind.
+# CSS/JS: tragen eine Versionsnummer (?v=...), die deploy.ps1 bei jeder
+#         Aenderung automatisch erneuert - duerfen deshalb lange gespeichert werden.
+# Schriften: aendern sich nie. Bilder: eine Woche.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 week"
+  ExpiresByType image/jpeg "access plus 1 week"
+  ExpiresByType image/png "access plus 1 week"
+  ExpiresByType image/svg+xml "access plus 1 week"
+  ExpiresByType image/x-icon "access plus 1 week"
+  ExpiresByType image/vnd.microsoft.icon "access plus 1 week"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(css|js|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.(webp|jpe?g|png|svg|ico)$">
+    Header set Cache-Control "public, max-age=604800"
+  </FilesMatch>
+  # Komprimierte und unkomprimierte Fassung getrennt zwischenspeichern
+  <FilesMatch "\.(html|css|js|svg|xml|txt)$">
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+</IfModule>
