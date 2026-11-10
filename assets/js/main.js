@@ -433,4 +433,37 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
+
+  /* 8. Seiten vorab laden: Der Klick auf einen internen Link öffnet die Seite ohne Wartezeit */
+  (function () {
+    const internal = (a) => a && a.origin === location.origin && a.pathname !== location.pathname &&
+      !a.hasAttribute('download') && a.target !== '_blank';
+
+    if (HTMLScriptElement.supports && HTMLScriptElement.supports('speculationrules')) {
+      // Chrome/Edge: Seite beim Überfahren oder Antippen eines Links im Hintergrund vorbereiten
+      const rules = document.createElement('script');
+      rules.type = 'speculationrules';
+      rules.textContent = JSON.stringify({
+        prerender: [{ where: { href_matches: '/*' }, eagerness: 'moderate' }]
+      });
+      document.head.appendChild(rules);
+      return;
+    }
+
+    // Andere Browser: HTML der Zielseite beim Überfahren/Antippen vorab holen
+    const conn = navigator.connection;
+    if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ''))) return;
+    const done = new Set();
+    const warm = (e) => {
+      const a = e.target.closest ? e.target.closest('a[href]') : null;
+      if (!internal(a) || done.has(a.pathname)) return;
+      done.add(a.pathname);
+      const link = document.createElement('link');
+      link.rel = 'prefetch';
+      link.href = a.pathname;
+      document.head.appendChild(link);
+    };
+    document.addEventListener('pointerenter', warm, { capture: true, passive: true });
+    document.addEventListener('touchstart', warm, { capture: true, passive: true });
+  })();
 })();

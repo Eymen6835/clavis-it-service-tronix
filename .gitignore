@@ -5,3 +5,6 @@ desktop.ini
 
 # Fertiger Upload-Ordner fuer den Webspace
 upload/
+
+# Sicherungskopien der Server-.htaccess (legt deploy.ps1 an)
+htaccess-server-backup-*.txt
