@@ -15,7 +15,7 @@
   <link rel="preload" href="assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/schibsted-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/styles.css?v=21">
+  <link rel="stylesheet" href="assets/css/styles.css?v=33">
   <script>
     (function(){try{var t=localStorage.getItem('clavis-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   </script>
@@ -162,8 +162,7 @@
             <div class="tronix-sub-badge tronix-sub-badge--light">Über mich</div>
             <h1>Eymen Kumaru</h1>
             <p class="lead">Ich habe Clavis IT Service gegründet und führe es selbst. Wenn Sie anrufen, sprechen Sie mit mir – und ich bin es auch, der später zu Ihnen kommt.</p>
-            <!-- PRÜFEN: Angaben zu Ausbildung, Berufserfahrung oder Zertifikaten fehlen. Bei Bedarf hier ergänzen. -->
-            <p style="margin-top: 0.9rem; font-size: 1.08rem; color: rgba(255, 255, 255, 0.88);">Ich arbeite sorgfältig, erkläre verständlich und nehme mir Zeit für Ihre Fragen – in Mannheim und Umgebung.</p>
+            <p style="margin-top: 0.9rem; font-size: 1.08rem; color: rgba(255, 255, 255, 0.88);">Informatiker, seit 2017 in der IT. Ich arbeite sorgfältig, erkläre verständlich und nehme mir Zeit für Ihre Fragen – in Mannheim und Umgebung.</p>
 
             <div class="action-row">
               <a class="btn btn--primary tabular" href="tel:+491626327036">
@@ -181,8 +180,66 @@
       </div>
     </section>
 
+    <!-- Erfahrung & Qualifikation (aus dem Lebenslauf) -->
+    <!-- Kundennamen aus dem Lebenslauf bewusst nicht genannt (Vertraulichkeit). Nur mit Freigabe der Unternehmen ergänzen. -->
+    <section class="section" id="erfahrung">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <div class="tronix-sub-badge">Erfahrung</div>
+          <h2>IT-Wissen aus großen Unternehmen – für Sie vor Ort</h2>
+        </div>
+
+        <div class="xp-stats" data-reveal-stagger>
+          <div class="xp-stat"><strong>Seit 2017</strong><span>im IT-Support tätig</span></div>
+          <div class="xp-stat"><strong>Informatik</strong><span>Studium an der Hochschule Worms</span></div>
+          <div class="xp-stat"><strong>Cisco CCNA</strong><span>Netzwerk-Zertifizierung (2022)</span></div>
+          <div class="xp-stat"><strong>3 Sprachen</strong><span>Deutsch · Türkisch · Englisch</span></div>
+        </div>
+
+        <div class="grid-2 xp-grid">
+          <div data-reveal>
+            <h3>Beruflicher Werdegang</h3>
+            <div class="xp-story">
+              <p><strong>Informatiker, seit 2017 in der IT.</strong> Studiert habe ich an der Hochschule Worms.</p>
+              <p>Seitdem betreue ich den IT-Support großer Unternehmen – in Industrie, Chemie, Luftfahrt, Versicherung und in einer internationalen Wirtschaftskanzlei. Mal am Telefon, mal per Fernwartung, oft direkt am Arbeitsplatz.</p>
+              <p>Dieses Wissen bringe ich heute zu Ihnen – nach Hause und in Ihren Betrieb.</p>
+            </div>
+            <ul class="xp-steps" aria-label="Werdegang in Kürze">
+              <li><span>seit 2024</span>IT-Support für internationale Unternehmen</li>
+              <li><span>2022 – 2024</span>Anwendungs-Support in einer Wirtschaftskanzlei</li>
+              <li><span>2020 – 2022</span>IT-Support im Konzernumfeld</li>
+              <li><span>2017 – 2019</span>Vor-Ort-Support in Industrie und Chemie</li>
+              <li><span>2017 – 2023</span>Studium der Informatik</li>
+            </ul>
+          </div>
+
+          <div data-reveal>
+            <h3>Darin kenne ich mich aus</h3>
+            <ul class="xp-skills">
+              <li>Microsoft 365, Outlook &amp; Teams</li>
+              <li>Exchange, SharePoint &amp; OneDrive</li>
+              <li>Windows 10/11 &amp; macOS</li>
+              <li>iPhone, iPad &amp; Android</li>
+              <li>Netzwerk, WLAN &amp; VPN</li>
+              <li>Router, Switches &amp; Access Points</li>
+              <li>Active Directory &amp; Entra ID</li>
+              <li>Geräteverwaltung mit Intune</li>
+              <li>Datensicherung &amp; Wiederherstellung</li>
+              <li>Verschlüsselung &amp; Virenschutz</li>
+              <li>Drucker &amp; Scanner</li>
+              <li>Automatisierung mit PowerShell</li>
+            </ul>
+            <div class="card card--tinted xp-benefit">
+              <h3>Was Sie davon haben</h3>
+              <p>Ich arbeite nach denselben sorgfältigen Abläufen wie in großen IT-Abteilungen: Ursachen finden statt nur Symptome beheben, alles dokumentieren und Änderungen vorher mit Ihnen absprechen – erklärt in verständlichen Worten.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Wer zu Ihnen kommt & Auf einen Blick -->
-    <section class="section">
+    <section class="section section--subtle">
       <div class="container">
         <div class="grid-2" style="align-items: start; gap: 2.5rem;">
           <div>
@@ -215,7 +272,7 @@
     </section>
 
     <!-- So läuft ein Termin ab -->
-    <section class="section section--subtle">
+    <section class="section">
       <div class="container">
         <div class="section-header section-header--center">
           <div class="tronix-sub-badge tronix-sub-badge--center">Ablauf</div>
@@ -251,7 +308,7 @@
     </section>
 
     <!-- So arbeite ich -->
-    <section class="section">
+    <section class="section section--subtle">
       <div class="container">
         <div class="section-header section-header--center">
           <div class="tronix-sub-badge tronix-sub-badge--center">Grundsätze</div>
@@ -295,7 +352,7 @@
     </section>
 
     <!-- Einsatzgebiet -->
-    <section class="section section--subtle">
+    <section class="section">
       <div class="container">
         <div class="section-header">
           <div class="tronix-sub-badge">Einsatzgebiet</div>

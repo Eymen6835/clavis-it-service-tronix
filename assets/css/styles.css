@@ -4016,3 +4016,82 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   .reveal-on [data-reveal] { opacity: 1 !important; transform: none !important; }
   .home-hero-deco, .home-hero-toggle, .home-hero-float, .home-net { display: none !important; }
 }
+
+/* ---------- Über mich: Erfahrung aus dem Lebenslauf ---------- */
+.xp-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 2.75rem;
+}
+.xp-stat {
+  display: grid;
+  gap: 0.3rem;
+  padding: 1.25rem 1.3rem;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(8, 20, 44, 0.06);
+}
+.xp-stat strong {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.15;
+  color: var(--thm-color);
+}
+.xp-stat span { font-size: 0.92rem; color: var(--text-muted); line-height: 1.4; }
+.xp-grid { align-items: start; gap: 2.75rem; }
+.xp-grid h3 { margin-top: 0; }
+.xp-story { margin-top: 1rem; }
+.xp-story p { font-size: 1.05rem; line-height: 1.65; color: var(--text-muted); }
+.xp-story p strong { color: var(--text); }
+.xp-steps {
+  list-style: none;
+  margin: 1.4rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+.xp-steps li {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.97rem;
+  color: var(--text);
+}
+.xp-steps span {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--thm-color);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 420px) {
+  .xp-steps li { grid-template-columns: 1fr; gap: 0.15rem; }
+}
+.xp-skills {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0 1.75rem;
+  padding: 0;
+}
+.xp-skills li {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: var(--thm-soft);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.xp-benefit h3 { font-size: 1.1rem; }
+.xp-benefit p { margin-bottom: 0; }
+@media (max-width: 900px) {
+  .xp-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 420px) {
+  .xp-stats { grid-template-columns: 1fr; }
+}
