@@ -1,14 +1,14 @@
 /* ==========================================================================
-   Clavis IT Service – Hochauflösende IT-Ebene über dem Luftbild von Mannheim
-   (Variante 2: Höhere Vogelperspektive mit Wasserturm, Augustaanlage & Neckar)
+   Clavis IT Service – Fotorealistischer Zeitraffer im Kopfbereich der Startseite
+   (Spätnachmittag → Sonnenuntergang → Blaue Stunde → Morgendämmerung → Tag)
 
-   - Gestochen scharfes HiDPI/Retina-Rendering (bis 2.5x DevicePixelRatio)
-   - Wasserturm-Laterne als strahlender Hauptknoten mit mehrstufigem Sonar-Impuls
-   - Perspektivischer Licht- & Datenstrom mit Schweif entlang der Augustaanlage
-   - Sanft geschwungene Bezier-Lichtbögen rund um Wasserturm-Rondell & Fontänen
-   - Ortsmarken „WASSERTURM" und „AUGUSTAANLAGE" im edlen Glas-Design
-   - Vernetzte Dachknoten (Rosengarten, Christuskirche, Arkaden, Neckarufer,
-     Quadrate) mit ruhigen Statusmeldungen („WLAN verbunden ✓", „Backup ✓" …)
+   - Statische Luftbild-Kamera über Mannheim (Wasserturm, Friedrichsplatz,
+     Augustaanlage, Rosengarten & Neckar)
+   - Stufenloser WebGL-Übergang in beide Richtungen (Hell ↔ Dunkel) ohne Raster
+   - Straßenlaternen entlang der Augustaanlage schalten sich der Reihe nach ein/aus
+   - Stadtfenster und die Wasserturm-Anstrahlung blenden organisch auf und ab
+   - Sanfte Langzeitbelichtungs-Lichtspuren des Verkehrs (Traffic Light Trails)
+   - Pausiert automatisch außerhalb des Sichtfelds oder bei „Bewegung reduzieren"
    ========================================================================== */
 (function () {
   'use strict';
@@ -24,467 +24,359 @@
   const mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
   const calm = () => (mq && mq.matches) || root.classList.contains('motion-reduced');
 
-  /* ---------------------------------------------------------------------
-     Koordinaten im Luftbild (Anteile 0..1 von Breite 1376 × Höhe 768)
-     Kalibriert auf Variante 2 (Wasserturm, Augustaanlage & Neckar)
-     --------------------------------------------------------------------- */
   const IMG_W = 1376, IMG_H = 768;
-
-  // Goldene Statue / Laterne auf dem Mannheimer Wasserturm
-  const HUB = [0.722, 0.426];
-
-  // Augustaanlage: vom Horizont geradewegs durch die Baumallee zum Friedrichsplatz
-  const AVENUE = [
-    [0.812, 0.292],
-    [0.800, 0.352],
-    [0.788, 0.420],
-    [0.774, 0.498],
-    [0.758, 0.582]
-  ];
-
-  // Geschwungener Rundweg am Fuß des Wasserturms (Friedrichsplatz-Rondell)
-  const ARC_BASE = [
-    [0.595, 0.745],
-    [0.625, 0.805],
-    [0.678, 0.842],
-    [0.748, 0.852],
-    [0.808, 0.825],
-    [0.845, 0.768]
-  ];
-
-  // Geschwungener Bogen um das Wasserbecken / die Fontänen am Friedrichsplatz
-  const ARC_PLAZA = [
-    [0.630, 0.655],
-    [0.672, 0.628],
-    [0.755, 0.628],
-    [0.818, 0.658],
-    [0.848, 0.708]
-  ];
-
-  // Feste Ortsmarken am Wasserturm und an der Augustaanlage
-  const LANDMARKS = [
-    { pos: [0.722, 0.426], label: 'WASSERTURM', side: 'left', dx: -18, dy: -16 },
-    { pos: [0.795, 0.380], label: 'AUGUSTAANLAGE', side: 'right', dx: 20, dy: -12 }
-  ];
-
-  // Markante Gebäude- und Dachknoten in Mannheim
-  const NODES = [
-    [0.661, 0.312], // 0: Christuskirche Oststadt
-    [0.618, 0.512], // 1: Arkadenbau am Friedrichsplatz
-    [0.452, 0.542], // 2: Friedrichsplatz Nordwest-Flügel
-    [0.355, 0.608], // 3: Rosengarten
-    [0.303, 0.365], // 4: Kirchturm Innenstadt
-    [0.378, 0.315], // 5: Neckarbrücke / Neckarufer
-    [0.532, 0.415], // 6: Quadrate / Oststadt Übergang
-    [0.632, 0.398], // 7: Oststadt Zentrum
-    [0.875, 0.365], // 8: Oststadt Süd / Augustaanlage
-    [0.915, 0.545], // 9: Arkadenbau Südost
-    [0.855, 0.455], // 10: Augustaanlage Südseite
-    [0.558, 0.335]  // 11: Mannheimer Horizont
-  ];
-
-  // Knoten für einblendende Status-Pills im freien Sichtfeld
-  const TAG_CANDIDATES = [0, 1, 6, 7, 11];
-  const STATUS = [
-    'WLAN verbunden ✓',
-    'Backup aktuell ✓',
-    'Fernwartung aktiv',
-    'Updates geprüft ✓',
-    'Firewall & Schutz ✓',
-    'E-Mail & Cloud ✓',
-    'Netzwerk stabil ✓'
-  ];
-
-  // Leitungen zwischen benachbarten Gebäuden und zum Wasserturm
-  const dist = (a, b) => Math.hypot((a[0] - b[0]) * IMG_W, (a[1] - b[1]) * IMG_H);
-  const edges = [];
-  const seen = new Set();
-  const addEdge = (i, j) => {
-    const key = i < j ? i + '-' + j : j + '-' + i;
-    if (i === j || seen.has(key)) return;
-    seen.add(key);
-    edges.push([i, j]);
-  };
-  const pts = NODES.concat([HUB]);
-  const H = pts.length - 1;
-  NODES.forEach((n, i) => {
-    NODES.map((m, j) => [j, dist(n, m)]).filter(([j]) => j !== i)
-      .sort((a, b) => a[1] - b[1]).slice(0, 2).forEach(([j]) => addEdge(i, j));
-  });
-  NODES.map((n, i) => [i, dist(n, HUB)]).sort((a, b) => a[1] - b[1]).slice(0, 6).forEach(([i]) => addEdge(i, H));
-  const hubEdges = edges.filter((e) => e[0] === H || e[1] === H);
+  const CYCLE_DURATION = 16.0; // Symmetrischer 16-Sekunden-Zyklus (je 5,8s Hell->Dunkel & Dunkel->Hell)
 
   /* ---------------------------------------------------------------------
-     Abbildung Foto → Leinwand (HiDPI / Retina bis 2.5x für höchste Schärfe)
+     Offscreen-WebGL-Bühne (1376 × 768) für den stufenlosen Zeitraffer-Shader
      --------------------------------------------------------------------- */
-  let W = 0, Hh = 0, dpr = 1, ox = 0, oy = 0, sw = 0, sh = 0, small = false;
+  const glCanvas = document.createElement('canvas');
+  glCanvas.width = IMG_W;
+  glCanvas.height = IMG_H;
+  const gl = glCanvas.getContext('webgl', { premultipliedAlpha: false, antialias: true });
+  if (!gl) return;
+
+  const vsSource = `
+    attribute vec2 aPos;
+    varying vec2 vUv;
+    void main() {
+      vUv = aPos * 0.5 + 0.5;
+      vUv.y = 1.0 - vUv.y;
+      gl_Position = vec4(aPos, 0.0, 1.0);
+    }
+  `;
+
+  const fsSource = `
+    precision highp float;
+    varying vec2 vUv;
+    uniform sampler2D uDay;
+    uniform sampler2D uNight;
+    uniform float uTime;
+    uniform float uProgress;  // 0.0 = Tag, 1.0 = Blaue Stunde
+    uniform float uDirection; // +1.0 = Abend (Hell -> Dunkel), -1.0 = Morgen (Dunkel -> Hell)
+
+    float softWave(vec2 p) {
+      float w1 = sin(p.x * 18.0 + p.y * 11.0);
+      float w2 = cos(p.x * 29.0 - p.y * 23.0);
+      float w3 = sin(p.x * 47.0 + p.y * 37.0);
+      return (w1 * 0.5 + w2 * 0.3 + w3 * 0.2) * 0.5 + 0.5;
+    }
+
+    float segDist(vec2 p, vec2 a, vec2 b, out float hOut) {
+      vec2 pa = p - a, ba = b - a;
+      hOut = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+      return length(pa - ba * hOut);
+    }
+
+    void main() {
+      vec2 uv = vUv;
+
+      vec3 dayCol = texture2D(uDay, uv).rgb;
+      vec3 nightCol = texture2D(uNight, uv).rgb;
+
+      // 1. Sanft ziehende Wolken am Taghimmel
+      float skyMask = smoothstep(0.245, 0.165, uv.y);
+      if (skyMask > 0.001) {
+        float cloudDrift = uTime * 0.009;
+        vec2 skyUv = vec2(1.0 - abs(1.0 - mod(uv.x - cloudDrift, 2.0)), uv.y);
+        vec3 driftedDaySky = texture2D(uDay, skyUv).rgb;
+        dayCol = mix(dayCol, driftedDaySky, skyMask * 0.72 * (1.0 - smoothstep(0.25, 0.65, uProgress)));
+      }
+
+      // 2. Symmetrische, seidenweiche Himmels- & Atmosphären-Entwicklung
+      float skyVerticalShift = (0.25 - uv.y) * 0.15 * uDirection;
+      float skyProgress = smoothstep(0.06, 0.78, uProgress + skyVerticalShift);
+      float cityAmbientProgress = smoothstep(0.10, 0.84, uProgress);
+      float envBlend = mix(cityAmbientProgress, skyProgress, smoothstep(0.30, 0.22, uv.y));
+
+      // Warme Dämmerungs-Farbtönung in der Übergangsmitte
+      float twilightBell = sin(clamp(uProgress / 0.78, 0.0, 1.0) * 3.14159);
+      vec3 eveningTint = vec3(1.09, 0.95, 0.82);
+      vec3 morningTint = vec3(1.07, 0.96, 0.88);
+      vec3 activeTint = uDirection >= 0.0 ? eveningTint : morningTint;
+      vec3 tintedDay = dayCol * mix(vec3(1.0), activeTint, twilightBell * 0.78);
+
+      vec3 baseScene = mix(tintedDay, nightCol, envBlend);
+
+      // 3. Reines additives Warmlicht der Stadtbeleuchtung (unterhalb des Horizonts uv.y > 0.29)
+      float belowHorizon = smoothstep(0.285, 0.345, uv.y);
+      vec3 positiveEmission = max(vec3(0.0), nightCol - baseScene);
+      float warmGlowMask = smoothstep(0.02, 0.18, positiveEmission.r - positiveEmission.b * 0.75) * belowHorizon;
+
+      // A) Wasserturm-Anstrahlung
+      float towerMask = smoothstep(0.095, 0.03, length((uv - vec2(0.718, 0.60)) * vec2(1.0, 0.42)));
+      float towerHeightOrder = clamp((0.82 - uv.y) / 0.42, 0.0, 1.0);
+      float towerOrder = uDirection >= 0.0 ? towerHeightOrder : (1.0 - towerHeightOrder);
+      float towerTurnOn = smoothstep(0.22 + towerOrder * 0.16, 0.56 + towerOrder * 0.16, uProgress);
+
+      // B) Augustaanlage-Laternenkette
+      float avePos = 0.0;
+      float dAve = segDist(uv, vec2(0.758, 0.585), vec2(0.812, 0.292), avePos);
+      float aveCorridor = 1.0 - smoothstep(0.02, 0.055, dAve);
+      float aveOrder = uDirection >= 0.0 ? avePos : (1.0 - avePos);
+      float aveTurnOn = smoothstep(0.20 + aveOrder * 0.34, 0.48 + aveOrder * 0.34, uProgress);
+
+      // C) Sanfte, stufenlose Welle für die Stadtgebäude
+      float waveVal = softWave(uv);
+      float waveOrder = uDirection >= 0.0 ? waveVal : (1.0 - waveVal);
+      float cityLightsTurnOn = smoothstep(0.18 + waveOrder * 0.34, 0.54 + waveOrder * 0.32, uProgress);
+
+      float lightActivation = cityLightsTurnOn;
+      lightActivation = mix(lightActivation, aveTurnOn, aveCorridor);
+      lightActivation = mix(lightActivation, towerTurnOn, towerMask);
+
+      vec3 finalCol = baseScene + positiveEmission * warmGlowMask * lightActivation;
+
+      gl_FragColor = vec4(clamp(finalCol, 0.0, 1.0), 1.0);
+    }
+  `;
+
+  function compileShader(type, src) {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+
+  const prog = gl.createProgram();
+  gl.attachShader(prog, compileShader(gl.VERTEX_SHADER, vsSource));
+  gl.attachShader(prog, compileShader(gl.FRAGMENT_SHADER, fsSource));
+  gl.linkProgram(prog);
+  gl.useProgram(prog);
+
+  const buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+  const aPos = gl.getAttribLocation(prog, 'aPos');
+  gl.enableVertexAttribArray(aPos);
+  gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+  const uTimeLoc = gl.getUniformLocation(prog, 'uTime');
+  const uProgLoc = gl.getUniformLocation(prog, 'uProgress');
+  const uDirLoc = gl.getUniformLocation(prog, 'uDirection');
+  const uDayLoc = gl.getUniformLocation(prog, 'uDay');
+  const uNightLoc = gl.getUniformLocation(prog, 'uNight');
+
+  function uploadTex(unit, imageEl) {
+    const t = gl.createTexture();
+    gl.activeTexture(gl.TEXTURE0 + unit);
+    gl.bindTexture(gl.TEXTURE_2D, t);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, imageEl);
+    return t;
+  }
+
+  /* ---------------------------------------------------------------------
+     Abbildung Foto → Leinwand (synchron zu object-fit: cover & object-position)
+     --------------------------------------------------------------------- */
+  let W = 0, Hh = 0, dpr = 1, ox = 0, oy = 0, sw = 0, sh = 0, scaleFactor = 1;
   function fit() {
     W = Math.max(1, canvas.offsetWidth);
     Hh = Math.max(1, canvas.offsetHeight);
-    dpr = Math.min(window.devicePixelRatio || 1, 2.5);
+    dpr = Math.min(window.devicePixelRatio || 1, 2.0);
     canvas.width = Math.round(W * dpr);
     canvas.height = Math.round(Hh * dpr);
-    const s = Math.max(W / IMG_W, Hh / IMG_H);
-    sw = IMG_W * s;
-    sh = IMG_H * s;
-    const pos = (getComputedStyle(img).objectPosition || '72% 52%').split(' ').map((p) => parseFloat(p) / 100);
+    scaleFactor = Math.max(W / IMG_W, Hh / IMG_H);
+    sw = IMG_W * scaleFactor;
+    sh = IMG_H * scaleFactor;
+    const pos = (getComputedStyle(img).objectPosition || '72% 54%').split(' ').map((p) => parseFloat(p) / 100);
     ox = (W - sw) * (isNaN(pos[0]) ? 0.72 : pos[0]);
-    oy = (Hh - sh) * (isNaN(pos[1]) ? 0.52 : pos[1]);
-    small = W < 700;
+    oy = (Hh - sh) * (isNaN(pos[1]) ? 0.54 : pos[1]);
   }
-  const P = (p) => [ox + p[0] * sw, oy + p[1] * sh];
-  const visible = (p, m) => p[0] > -m && p[0] < W + m && p[1] > -m && p[1] < Hh + m;
-
-  // Hochauflösender 128×128 Bloom-Leuchtpunkt für edle Lichtgrafik
-  const glow = document.createElement('canvas');
-  glow.width = glow.height = 128;
-  (function () {
-    const g = glow.getContext('2d');
-    const grad = g.createRadialGradient(64, 64, 0, 64, 64, 64);
-    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
-    grad.addColorStop(0.14, 'rgba(224, 242, 254, 0.95)');
-    grad.addColorStop(0.32, 'rgba(56, 189, 248, 0.72)');
-    grad.addColorStop(0.62, 'rgba(14, 165, 233, 0.24)');
-    grad.addColorStop(1, 'rgba(56, 189, 248, 0)');
-    g.fillStyle = grad;
-    g.fillRect(0, 0, 128, 128);
-  })();
-  function dot(x, y, r, a) {
-    if (a <= 0) return;
-    ctx.globalAlpha = Math.min(1, a);
-    ctx.drawImage(glow, x - r, y - r, r * 2, r * 2);
-  }
+  const P = (u, v) => [ox + u * sw, oy + v * sh];
 
   /* ---------------------------------------------------------------------
-     Animations-Zustand
+     2D-Zeitraffer-Lichtspuren & Laternen entlang der Augustaanlage
      --------------------------------------------------------------------- */
-  const rand = (a, b) => a + Math.random() * (b - a);
-  const phases = NODES.map(() => rand(0, Math.PI * 2));
-  let packets = [], stream = [], arcPulses = [], rings = [], tags = [];
-  let time = 0, nextPacket = 0, nextStream = 0.2, nextArc = 0.35, nextTag = 1.1, hubGlow = 0.4;
-  let statusIdx = 0;
-
-  function triggerHubPulse(strength) {
-    hubGlow = Math.max(hubGlow, strength);
-    if (rings.length < 3) {
-      rings.push({ t: 0, dur: 1.9, maxR: small ? 30 : 46 });
-    }
+  const STREETLIGHTS_AVE = [];
+  for (let i = 0; i < 16; i++) {
+    const f = i / 15;
+    const cx = 0.760 + (0.811 - 0.760) * f;
+    const cy = 0.580 + (0.300 - 0.580) * f;
+    const spread = 0.022 * (1 - f * 0.72);
+    STREETLIGHTS_AVE.push({ x: cx - spread, y: cy, order: f, scale: 1 - f * 0.65 });
+    STREETLIGHTS_AVE.push({ x: cx + spread, y: cy, order: f, scale: 1 - f * 0.65 });
   }
 
-  function spawnPacket() {
-    const toHub = Math.random() < 0.6;
-    const e = toHub ? hubEdges[(Math.random() * hubEdges.length) | 0] : edges[(Math.random() * edges.length) | 0];
-    let a = e[0], b = e[1];
-    if (toHub ? a === H : Math.random() < 0.5) { const t = a; a = b; b = t; }
-    packets.push({ a, b, t: 0, dur: rand(1.4, 2.3) });
-  }
-
-  function update(dt) {
-    time += dt;
-
-    // Datenpakete auf den Dachleitungen
-    if (time >= nextPacket) {
-      if (packets.length < (small ? 6 : 11)) spawnPacket();
-      nextPacket = time + rand(0.2, 0.44);
+  const TRAFFIC_PATHS = [
+    {
+      pts: [[0.422, 0.990], [0.390, 0.915], [0.378, 0.835], [0.388, 0.765], [0.428, 0.700], [0.488, 0.642], [0.555, 0.585]],
+      color: 'rgba(255, 235, 190, ',
+      core: 'rgba(255, 252, 240, ',
+      width: 2.5,
+      speed: 0.26,
+      len: 0.16
+    },
+    {
+      pts: [[0.560, 0.588], [0.494, 0.646], [0.434, 0.704], [0.395, 0.768], [0.386, 0.838], [0.398, 0.918], [0.432, 0.990]],
+      color: 'rgba(255, 75, 55, ',
+      core: 'rgba(255, 190, 170, ',
+      width: 2.1,
+      speed: 0.22,
+      len: 0.15
+    },
+    {
+      pts: [[0.784, 0.578], [0.793, 0.500], [0.802, 0.425], [0.810, 0.345], [0.814, 0.298]],
+      color: 'rgba(255, 85, 60, ',
+      core: 'rgba(255, 200, 180, ',
+      width: 1.7,
+      speed: 0.30,
+      len: 0.18
+    },
+    {
+      pts: [[0.810, 0.298], [0.804, 0.350], [0.792, 0.425], [0.776, 0.502], [0.758, 0.578]],
+      color: 'rgba(255, 230, 175, ',
+      core: 'rgba(255, 250, 235, ',
+      width: 1.8,
+      speed: 0.28,
+      len: 0.18
+    },
+    {
+      pts: [[0.750, 0.592], [0.795, 0.605], [0.848, 0.622], [0.990, 0.720]],
+      color: 'rgba(255, 90, 65, ',
+      core: 'rgba(255, 220, 195, ',
+      width: 2.0,
+      speed: 0.24,
+      len: 0.16
+    },
+    {
+      pts: [[0.990, 0.712], [0.848, 0.616], [0.795, 0.598], [0.748, 0.586]],
+      color: 'rgba(255, 235, 185, ',
+      core: 'rgba(255, 252, 240, ',
+      width: 2.0,
+      speed: 0.27,
+      len: 0.16
     }
-    packets = packets.filter((p) => {
-      p.t += dt / p.dur;
-      if (p.t >= 1) {
-        if (p.b === H) triggerHubPulse(1);
-        return false;
-      }
-      return true;
-    });
+  ];
 
-    // Lichtimpulse entlang der Augustaanlage
-    if (time >= nextStream) {
-      stream.push({ t: 0, dur: rand(2.5, 3.3), lane: Math.random() < 0.5 ? -1 : 1 });
-      nextStream = time + rand(0.55, 1.0);
-    }
-    stream = stream.filter((s) => {
-      s.t += dt / s.dur;
-      if (s.t >= 1) {
-        triggerHubPulse(0.75);
-        return false;
-      }
-      return true;
-    });
-
-    // Gleitende Lichtpunkte auf den geschwungenen Friedrichsplatz-Bögen
-    if (time >= nextArc) {
-      const useBase = Math.random() < 0.58;
-      const rev = Math.random() < 0.5;
-      arcPulses.push({
-        path: useBase ? ARC_BASE : ARC_PLAZA,
-        rev,
-        t: 0,
-        dur: rand(3.0, 4.2)
-      });
-      nextArc = time + rand(1.0, 1.65);
-    }
-    arcPulses = arcPulses.filter((ap) => (ap.t += dt / ap.dur) < 1);
-
-    // Sonar-Ringe um die Wasserturm-Spitze
-    rings = rings.filter((r) => (r.t += dt / r.dur) < 1);
-
-    // Status-Badges im freien Sichtfeld
-    if (time >= nextTag && !small) {
-      const free = TAG_CANDIDATES.map((i) => [i, P(NODES[i])]).filter(([i, p]) =>
-        p[0] > W * 0.44 && p[0] < W * 0.68 && p[1] > 45 && p[1] < Hh * 0.62 && !tags.some((t) => t.i === i)
-      );
-      if (free.length && tags.length < 1) {
-        const pick = free[(Math.random() * free.length) | 0];
-        const text = STATUS[statusIdx % STATUS.length];
-        statusIdx++;
-        tags.push({ i: pick[0], text, t: 0, dur: 3.6 });
-      }
-      nextTag = time + rand(2.6, 3.8);
-    }
-    tags = tags.filter((t) => (t.t += dt) < t.dur);
-    hubGlow = Math.max(0, hubGlow - dt * 1.15);
-  }
-
-  function along(path, t) {
-    const n = path.length - 1;
+  function sampleCurveScreen(pts, t) {
+    const n = pts.length - 1;
     const f = Math.min(n - 1e-6, Math.max(0, t * n));
     const k = Math.floor(f);
     const q = f - k;
-    return [
-      path[k][0] + (path[k + 1][0] - path[k][0]) * q,
-      path[k][1] + (path[k + 1][1] - path[k][1]) * q
-    ];
+    const u = pts[k][0] + (pts[k + 1][0] - pts[k][0]) * q;
+    const v = pts[k][1] + (pts[k + 1][1] - pts[k][1]) * q;
+    return P(u, v);
   }
 
-  function strokeSmoothPath(ptsScreen) {
-    if (ptsScreen.length < 2) return;
-    ctx.beginPath();
-    ctx.moveTo(ptsScreen[0][0], ptsScreen[0][1]);
-    for (let i = 0; i < ptsScreen.length - 1; i++) {
-      const xc = (ptsScreen[i][0] + ptsScreen[i + 1][0]) * 0.5;
-      const yc = (ptsScreen[i][1] + ptsScreen[i + 1][1]) * 0.5;
-      if (i === 0) {
-        ctx.lineTo(xc, yc);
-      } else {
-        ctx.quadraticCurveTo(ptsScreen[i][0], ptsScreen[i][1], xc, yc);
-      }
+  function calcStateFromCycle(cycleSec) {
+    const u = (cycleSec % CYCLE_DURATION) / CYCLE_DURATION;
+    if (u < 0.07) {
+      return { progress: 0.0, direction: 1.0 };
+    } else if (u < 0.43) {
+      const t = (u - 0.07) / 0.36;
+      return { progress: t * t * (3 - 2 * t), direction: 1.0 };
+    } else if (u < 0.57) {
+      return { progress: 1.0, direction: 1.0 };
+    } else if (u < 0.93) {
+      const t = (u - 0.57) / 0.36;
+      return { progress: 1.0 - t * t * (3 - 2 * t), direction: -1.0 };
+    } else {
+      return { progress: 0.0, direction: -1.0 };
     }
-    const last = ptsScreen[ptsScreen.length - 1];
-    ctx.lineTo(last[0], last[1]);
-    ctx.stroke();
   }
 
-  function roundRect(x, y, w, h, r) {
-    ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(x, y, w, h, r);
-    else ctx.rect(x, y, w, h);
-  }
-
-  function drawLandmarkBadge(anchor, lm) {
-    if (!visible(anchor, 80)) return;
-    const fs = small ? 9.5 : 10.5;
-    ctx.font = '600 ' + fs + 'px var(--font-heading, system-ui, sans-serif)';
-    const tw = ctx.measureText(lm.label).width;
-    const padX = small ? 8 : 10;
-    const boxW = tw + padX * 2;
-    const boxH = fs + (small ? 9 : 11);
-    const scale = small ? 0.78 : 1;
-    const bx = lm.side === 'left'
-      ? anchor[0] + lm.dx * scale - boxW
-      : anchor[0] + lm.dx * scale;
-    const by = anchor[1] + lm.dy * scale - boxH * 0.5;
-    const lineEndX = lm.side === 'left' ? bx + boxW : bx;
-
-    // Feine leuchtende Zeigerlinie
-    ctx.strokeStyle = 'rgba(186, 230, 253, 0.78)';
-    ctx.lineWidth = 1.2;
-    ctx.beginPath();
-    ctx.moveTo(anchor[0], anchor[1]);
-    ctx.lineTo(lineEndX, by + boxH * 0.5);
-    ctx.stroke();
-
-    // Edles dunkles Schild mit feinem Glanzrahmen
-    ctx.fillStyle = 'rgba(5, 16, 40, 0.86)';
-    roundRect(bx, by, boxW, boxH, 6);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(125, 211, 252, 0.48)';
-    ctx.lineWidth = 1;
-    roundRect(bx, by, boxW, boxH, 6);
-    ctx.stroke();
-
-    ctx.fillStyle = 'rgba(240, 249, 255, 0.98)';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(lm.label, bx + padX, by + boxH * 0.5 + 0.5);
-  }
+  let simTime = 1.2; // Startet direkt am Beginn des sanften Übergangs
+  let ready = false;
 
   function draw() {
+    if (!ready) return;
+    const st = calm() ? { progress: 0.82, direction: 1.0 } : calcStateFromCycle(simTime);
+    const progress = st.progress;
+    const direction = st.direction;
+
+    gl.viewport(0, 0, IMG_W, IMG_H);
+    gl.uniform1f(uTimeLoc, simTime);
+    gl.uniform1f(uProgLoc, progress);
+    gl.uniform1f(uDirLoc, direction);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    const sp = pts.map(P);
-    const h = sp[H];
 
-    // 1. Feine Netzwerk-Leitungen mit sanftem Farbverlauf zum Wasserturm
-    ctx.lineWidth = 1.05;
-    edges.forEach(([i, j]) => {
-      const a = sp[i], b = sp[j];
-      if (!visible(a, 180) && !visible(b, 180)) return;
-      const toHub = i === H || j === H;
-      ctx.strokeStyle = toHub ? 'rgba(125, 211, 252, 0.38)' : 'rgba(125, 211, 252, 0.20)';
-      ctx.beginPath();
-      ctx.moveTo(a[0], a[1]);
-      ctx.lineTo(b[0], b[1]);
-      ctx.stroke();
-    });
+    // WebGL-Zeitraffer deckungsgleich über das Hero-Bild zeichnen
+    ctx.drawImage(glCanvas, ox, oy, sw, sh);
 
-    // 2. Geschwungene Lichtbögen am Friedrichsplatz (Rondell & Wasserspiele)
-    ctx.setLineDash([4, 7]);
-    ctx.lineDashOffset = -time * 16;
-    ctx.strokeStyle = 'rgba(186, 230, 253, 0.54)';
-    ctx.lineWidth = 1.35;
-    strokeSmoothPath(ARC_BASE.map(P));
-    ctx.strokeStyle = 'rgba(125, 211, 252, 0.42)';
-    ctx.lineWidth = 1.2;
-    strokeSmoothPath(ARC_PLAZA.map(P));
+    const duskStrength = Math.max(0, Math.min(1, (progress - 0.20) / 0.55));
+    if (duskStrength <= 0.005) return;
 
-    // 3. Augustaanlage als leuchtende Haupt-Datenachse
-    const av = AVENUE.map(P);
-    ctx.setLineDash([3, 6]);
-    ctx.lineDashOffset = -time * 24;
-    ctx.strokeStyle = 'rgba(125, 211, 252, 0.68)';
-    ctx.lineWidth = 1.65;
-    ctx.beginPath();
-    av.forEach((p, k) => (k ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])));
-    ctx.lineTo(h[0], h[1] + sh * 0.025);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    // 4. Sonar-Impuls-Ringe um die Wasserturm-Laterne
-    rings.forEach((r) => {
-      const ease = 1 - Math.pow(1 - r.t, 2.2);
-      const rad = 5 + ease * r.maxR;
-      const alpha = (1 - r.t) * 0.52;
-      ctx.strokeStyle = 'rgba(125, 211, 252, ' + alpha.toFixed(3) + ')';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.arc(h[0], h[1], rad, 0, Math.PI * 2);
-      ctx.stroke();
-    });
-
-    // 5. Additive Licht- & Partikelebene („Hohe Grafik")
+    ctx.save();
     ctx.globalCompositeOperation = 'lighter';
 
-    // Dachknoten mit ruhigem Pulsieren
-    NODES.forEach((n, i) => {
-      const p = sp[i];
-      if (!visible(p, 20)) return;
-      const a = 0.46 + 0.3 * Math.sin(time * 1.5 + phases[i]);
-      dot(p[0], p[1], small ? 7 : 9.5, a);
-      dot(p[0], p[1], 2.4, 1);
-    });
-
-    // Datenpakete auf den Leitungen mit weichem Kometenschweif
-    packets.forEach((pk) => {
-      const a = sp[pk.a], b = sp[pk.b];
-      const e = pk.t < 0.5 ? 2 * pk.t * pk.t : 1 - Math.pow(-2 * pk.t + 2, 2) / 2;
-      for (let k = 5; k >= 0; k--) {
-        const q = Math.max(0, e - k * 0.028);
-        dot(
-          a[0] + (b[0] - a[0]) * q,
-          a[1] + (b[1] - a[1]) * q,
-          k ? 4.2 - k * 0.45 : 7.5,
-          k ? 0.36 - k * 0.05 : 1
-        );
-      }
-    });
-
-    // Perspektivischer Datenstrom die Augustaanlage entlang (mit Schweif)
-    stream.forEach((s) => {
-      for (let k = 3; k >= 0; k--) {
-        const st = Math.max(0, s.t - k * 0.022);
-        const q = Math.pow(st, 1.38);
-        const ptNorm = along(AVENUE, q);
-        const p = P([ptNorm[0] + (s.lane || 0) * 0.0018 * (0.4 + q), ptNorm[1]]);
-        const fade = Math.min(1, st / 0.14) * Math.min(1, (1 - st) / 0.16);
-        const r = (small ? 3.5 : 4.5) + 6.8 * q;
-        dot(p[0], p[1], k ? r * (0.75 - k * 0.12) : r, fade * (k ? 0.38 - k * 0.08 : 0.96));
-        if (k === 0) dot(p[0], p[1], 2.2 + 1.5 * q, fade);
-      }
-    });
-
-    // Gleitende Lichtpunkte auf den Friedrichsplatz-Bögen
-    arcPulses.forEach((ap) => {
-      for (let k = 2; k >= 0; k--) {
-        const st = Math.max(0, ap.t - k * 0.025);
-        const u = ap.rev ? 1 - st : st;
-        const p = P(along(ap.path, u));
-        const fade = Math.min(1, st / 0.16) * Math.min(1, (1 - st) / 0.16);
-        dot(p[0], p[1], k ? 4.5 - k : (small ? 6 : 8), fade * (k ? 0.32 : 0.9));
-        if (k === 0) dot(p[0], p[1], 2.4, fade);
-      }
-    });
-
-    // Wasserturm-Laterne als strahlender Hauptknoten
-    dot(h[0], h[1], (small ? 15 : 20) + hubGlow * 18, 0.68 + 0.18 * Math.sin(time * 2.0) + hubGlow * 0.35);
-    dot(h[0], h[1], 4.2, 1);
-
-    ctx.globalCompositeOperation = 'source-over';
-    ctx.globalAlpha = 1;
-
-    // 6. Ortsmarken „WASSERTURM" und „AUGUSTAANLAGE"
-    LANDMARKS.forEach((lm) => {
-      const anchor = P(lm.pos);
-      dot(anchor[0], anchor[1], 3.4, 0.96);
-      drawLandmarkBadge(anchor, lm);
-    });
-
-    // 7. Einladende Status-Badges („WLAN verbunden ✓" etc.)
-    tags.forEach((t) => {
-      const a = Math.min(1, t.t / 0.38) * Math.min(1, (t.dur - t.t) / 0.52);
-      const p = sp[t.i];
-      const fs = 11;
-      ctx.font = '600 ' + fs + 'px var(--font-heading, system-ui, sans-serif)';
-      const tw = ctx.measureText(t.text).width;
-      const x = p[0] + 10, y = p[1] - 32 - (1 - a) * 5;
-      ctx.globalAlpha = a;
-      ctx.strokeStyle = 'rgba(186, 230, 253, 0.76)';
-      ctx.lineWidth = 1.15;
+    // 1. Sequentielles Auf- und Ableuchten der Laternen entlang der Augustaanlage
+    STREETLIGHTS_AVE.forEach((sl) => {
+      const ord = direction >= 0 ? sl.order : (1 - sl.order);
+      const rawTurn = Math.max(0, Math.min(1, (progress - (0.22 + ord * 0.34)) / 0.16));
+      const turnOn = rawTurn * rawTurn * (3 - 2 * rawTurn);
+      if (turnOn <= 0.005) return;
+      const [x, y] = P(sl.x, sl.y);
+      const r = 6.5 * sl.scale * scaleFactor;
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0, 'rgba(255, 240, 200, ' + (0.38 * turnOn).toFixed(3) + ')');
+      grad.addColorStop(0.45, 'rgba(255, 185, 90, ' + (0.20 * turnOn).toFixed(3) + ')');
+      grad.addColorStop(1, 'rgba(255, 160, 50, 0)');
+      ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.moveTo(p[0] + 2, p[1] - 2);
-      ctx.lineTo(x + 6, y + 20);
-      ctx.stroke();
-
-      ctx.fillStyle = 'rgba(5, 16, 40, 0.88)';
-      roundRect(x, y, tw + 30, fs + 12, 8);
+      ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = 'rgba(125, 211, 252, 0.5)';
-      roundRect(x, y, tw + 30, fs + 12, 8);
-      ctx.stroke();
-
-      ctx.fillStyle = '#4ADE80';
-      ctx.beginPath();
-      ctx.arc(x + 11, y + (fs + 12) / 2, 3.3, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = 'rgba(240, 249, 255, 0.98)';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(t.text, x + 20, y + (fs + 12) / 2 + 0.5);
-      ctx.globalAlpha = 1;
     });
+
+    // 2. Sanfte Langzeitbelichtungs-Lichtspuren (Traffic Light Trails)
+    TRAFFIC_PATHS.forEach((tr, idx) => {
+      for (let wave = 0; wave < 2; wave++) {
+        const head = (simTime * tr.speed + wave * 0.5 + idx * 0.17) % 1.25;
+        const steps = 22;
+        for (let s = 0; s < steps; s++) {
+          const u0 = head - (s / steps) * tr.len;
+          const u1 = head - ((s + 1) / steps) * tr.len;
+          if (u0 <= 0 || u1 >= 1 || u1 < 0 || u0 > 1) continue;
+          const p0 = sampleCurveScreen(tr.pts, u0);
+          const p1 = sampleCurveScreen(tr.pts, u1);
+          const tailFade = Math.sin((1 - s / steps) * Math.PI * 0.5);
+          const edgeFade = Math.min(1, u0 / 0.10) * Math.min(1, (1 - u0) / 0.10);
+          const alpha = duskStrength * tailFade * edgeFade * 0.46;
+          if (alpha <= 0.008) continue;
+
+          ctx.strokeStyle = tr.color + alpha.toFixed(3) + ')';
+          ctx.lineWidth = tr.width * scaleFactor * (0.6 + 0.4 * tailFade);
+          ctx.lineCap = 'round';
+          ctx.beginPath();
+          ctx.moveTo(p0[0], p0[1]);
+          ctx.lineTo(p1[0], p1[1]);
+          ctx.stroke();
+
+          if (s < 4) {
+            ctx.strokeStyle = tr.core + (alpha * 0.8).toFixed(3) + ')';
+            ctx.lineWidth = tr.width * scaleFactor * 0.42;
+            ctx.beginPath();
+            ctx.moveTo(p0[0], p0[1]);
+            ctx.lineTo(p1[0], p1[1]);
+            ctx.stroke();
+          }
+        }
+      }
+    });
+
+    ctx.restore();
   }
 
   /* ---------------------------------------------------------------------
-     Ablaufsteuerung
+     Ablaufsteuerung & Bild-Lader
      --------------------------------------------------------------------- */
   let raf = 0, last = 0, onScreen = true;
   function loop(now) {
     const dt = last ? Math.min(0.05, (now - last) / 1000) : 0;
     last = now;
-    update(dt);
+    simTime += dt;
     draw();
     raf = requestAnimationFrame(loop);
   }
   function start() {
-    if (raf || !onScreen || calm()) return;
+    if (raf || !onScreen || !ready || calm()) return;
     last = 0;
     raf = requestAnimationFrame(loop);
   }
@@ -493,14 +385,34 @@
     raf = 0;
   }
   function refresh() {
+    if (!ready) return;
     if (calm()) { stop(); draw(); } else start();
   }
 
   fit();
-  for (let k = 0; k < 95; k++) update(1 / 30);
-  tags = [];
-  draw();
-  requestAnimationFrame(() => canvas.classList.add('is-ready'));
+
+  // Passende Auflösung für das Blue-Hour-Gegenstück wählen
+  const targetW = window.innerWidth <= 680 ? 640 : (window.innerWidth <= 1024 ? 960 : 1376);
+  const nightImg = new Image();
+  nightImg.decoding = 'async';
+
+  function initWhenBothReady() {
+    if (!img.complete || !img.naturalWidth || !nightImg.complete || !nightImg.naturalWidth) return;
+    uploadTex(0, img);
+    uploadTex(1, nightImg);
+    gl.uniform1i(uDayLoc, 0);
+    gl.uniform1i(uNightLoc, 1);
+    ready = true;
+    fit();
+    draw();
+    requestAnimationFrame(() => canvas.classList.add('is-ready'));
+    refresh();
+  }
+
+  img.addEventListener('load', initWhenBothReady);
+  nightImg.addEventListener('load', initWhenBothReady);
+  nightImg.src = 'assets/img/mannheim-luftbild-bluehour-' + targetW + '.webp';
+  if (img.complete && img.naturalWidth) initWhenBothReady();
 
   if ('IntersectionObserver' in window) {
     new IntersectionObserver((entries) => {
@@ -522,5 +434,4 @@
   if ('MutationObserver' in window) {
     new MutationObserver(refresh).observe(root, { attributes: true, attributeFilter: ['class'] });
   }
-  refresh();
 })();

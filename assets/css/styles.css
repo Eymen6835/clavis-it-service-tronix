@@ -3305,7 +3305,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 
 .home-hero-media {
   position: absolute;
-  inset: -4% 0;
+  inset: 0;
   z-index: -3;
   translate: 0 var(--py, 0px);
 }
@@ -3654,7 +3654,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 
 @media (prefers-reduced-motion: no-preference) {
   .home-hero-stage {
-    animation: home-kenburns 34s ease-in-out infinite alternate;
+    animation: none;
     will-change: transform;
   }
   .home-hero-shade::after { animation: home-curtain 1.5s ease-out both; }
