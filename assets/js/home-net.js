@@ -160,8 +160,10 @@
   const uDayLoc = gl.getUniformLocation(prog, 'uDay');
   const uNightLoc = gl.getUniformLocation(prog, 'uNight');
 
+  const textures = [null, null];
   function uploadTex(unit, imageEl) {
-    const t = gl.createTexture();
+    if (textures[unit]) gl.deleteTexture(textures[unit]);
+    const t = textures[unit] = gl.createTexture();
     gl.activeTexture(gl.TEXTURE0 + unit);
     gl.bindTexture(gl.TEXTURE_2D, t);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
@@ -306,6 +308,7 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     // WebGL-Zeitraffer deckungsgleich über das Hero-Bild zeichnen
+    ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(glCanvas, ox, oy, sw, sh);
 
     const duskStrength = Math.max(0, Math.min(1, (progress - 0.20) / 0.55));
@@ -398,13 +401,29 @@
 
   fit();
 
-  // Passende Auflösung für das Blue-Hour-Gegenstück wählen
-  const targetW = window.innerWidth <= 680 ? 640 : (window.innerWidth <= 1024 ? 960 : 1376);
+  // Das Nachtbild wird in derselben Auflösung geladen wie das Tagbild, das der
+  // Browser per srcset gewählt hat (berücksichtigt Bildschirmdichte). Vorher
+  // richtete sich die Größe nur nach der Fensterbreite beim Laden – in schmalen
+  // Fenstern kam so die 640er-Version, die dann unscharf hochgezogen wurde.
   const nightImg = new Image();
   nightImg.decoding = 'async';
+  let nightW = 0;
+  // naturalWidth ist bei srcset dichte-korrigiert, daher die Breite aus dem Dateinamen lesen
+  const nightSize = () => {
+    const m = /-(\d+)\.(?:webp|avif|jpe?g|png)(?:[?#].*)?$/.exec(img.currentSrc || img.src || '');
+    const w = m ? parseInt(m[1], 10) : 1376;
+    return w > 960 ? 1376 : (w > 640 ? 960 : 640);
+  };
 
   function initWhenBothReady() {
-    if (!img.complete || !img.naturalWidth || !nightImg.complete || !nightImg.naturalWidth) return;
+    if (!img.complete || !img.naturalWidth) return;
+    const want = nightSize();
+    if (want !== nightW) {
+      nightW = want;
+      nightImg.src = 'assets/img/mannheim-luftbild-bluehour-' + want + '.webp';
+      return; // weiter, sobald das Nachtbild geladen ist
+    }
+    if (!nightImg.complete || !nightImg.naturalWidth) return;
     uploadTex(0, img);
     uploadTex(1, nightImg);
     gl.uniform1i(uDayLoc, 0);
@@ -418,7 +437,6 @@
 
   img.addEventListener('load', initWhenBothReady);
   nightImg.addEventListener('load', initWhenBothReady);
-  nightImg.src = 'assets/img/mannheim-luftbild-bluehour-' + targetW + '.webp';
   if (img.complete && img.naturalWidth) initWhenBothReady();
 
   if ('IntersectionObserver' in window) {

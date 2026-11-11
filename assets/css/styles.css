@@ -3298,7 +3298,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   align-items: center;
   min-height: clamp(600px, calc(100vh - 150px), 780px);
   min-height: clamp(600px, calc(100svh - 150px), 780px);
-  padding-block: clamp(3.25rem, 5.5vw, 4.75rem) clamp(7.25rem, 10vw, 8.75rem);
+  padding-block: clamp(3.25rem, 5.5vw, 4.75rem);
   background: #051028;
   color: #FFFFFF;
 }
@@ -3511,16 +3511,16 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 /* Schwebende Karten rechts über dem Himmel, der Wasserturm bleibt frei */
 .home-hero-float {
   position: relative;
-  min-height: 420px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
-.home-chip,
-.home-qr {
+.home-chip {
   position: absolute;
   translate: 0 var(--py, 0px);
 }
 .home-chip { display: none !important; } .home-chip--a { top: 0; right: 0; }
 .home-chip--b { top: 4.9rem; right: 5.5rem; }
-.home-qr { right: 0; bottom: 0; }
 
 .home-chip-in {
   display: flex;
@@ -3556,43 +3556,61 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 }
 .home-chip-icon svg { width: 19px; height: 19px; }
 
-.home-qr-in {
-  padding: 0.95rem 1rem 0.9rem;
+/* QR-Code: Kachel rechts neben den Anruf-Knöpfen (nur Desktop) */
+.home-action {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  column-gap: 1.25rem;
+}
+.home-qr {
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.6rem 0.55rem;
   border-radius: 18px;
-  background: rgba(7, 22, 54, 0.88);
-  border: 1px solid rgba(147, 197, 253, 0.34);
-  box-shadow: 0 22px 50px rgba(2, 8, 24, 0.45);
-  text-align: center;
+  background: rgba(8, 24, 58, 0.62);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: border-color 0.25s ease, translate 0.25s ease, box-shadow 0.25s ease;
+}
+.home-qr:hover,
+.home-qr:focus-visible {
+  color: #FFFFFF;
+  translate: 0 -2px;
+  border-color: rgba(147, 197, 253, 0.55);
+  box-shadow: 0 16px 36px rgba(2, 8, 24, 0.4);
+}
+.home-qr img {
+  display: block;
+  width: 92px;
+  height: 92px;
+  padding: 5px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  box-sizing: content-box;
 }
 .home-qr-title {
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #93C5FD;
+  white-space: nowrap;
 }
-.home-qr-in img {
-  display: block;
-  width: 104px;
-  height: 104px;
-  margin: 0.55rem auto 0.5rem;
-  padding: 0.5rem;
-  background: #FFFFFF;
-  border-radius: 12px;
-  box-sizing: content-box;
-}
-.home-qr-num {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #FFFFFF;
+/* Auf Handy und Tablet sind die Anruf-Knöpfe direkter als ein QR-Code */
+@media (max-width: 1279px), (hover: none) {
+  .home-action { display: block; }
+  .home-qr { display: none; }
 }
 
 .home-hero-toggle {
   position: absolute;
   right: clamp(0.75rem, 2vw, 1.5rem);
-  bottom: 5.6rem;
+  bottom: 1.25rem;
   z-index: 3;
   width: 36px;
   height: 36px;
@@ -3665,14 +3683,12 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
       home-line 0.9s cubic-bezier(0.2, 0.75, 0.2, 1) var(--d, 0s) both,
       home-sheen 9s linear 1.4s infinite;
   }
-  .home-chip-in,
-  .home-qr-in {
+  .home-chip-in {
     animation:
       home-pop 0.7s cubic-bezier(0.2, 1.1, 0.3, 1) var(--d, 0.9s) both,
       home-float 7s ease-in-out calc(var(--d, 0.9s) + 0.7s) infinite;
   }
   .home-chip--b .home-chip-in { animation-duration: 0.7s, 8.5s; }
-  .home-qr-in { animation: none !important; }
   .home-quad {
     animation:
       home-fade 1.2s ease 0.8s both,
@@ -3691,7 +3707,6 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   .home-anim,
   .home-title-line > span,
   .home-chip-in,
-  .home-qr-in,
   .home-quad { animation: home-fade 0.5s ease both; }
   .reveal-on [data-reveal] {
     transform: none;
@@ -3703,79 +3718,12 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 .motion-reduced .home-hero-stage,
 .motion-reduced .home-title-accent,
 .motion-reduced .home-chip-in,
-.motion-reduced .home-qr-in,
 .motion-reduced .home-quad { animation-play-state: paused; }
 .motion-reduced.reveal-on [data-reveal] {
   transform: none;
   transition: opacity 0.45s ease var(--reveal-delay, 0s);
 }
 .motion-reduced .page-home .btn::after { display: none; }
-
-/* ---------- Eckdaten: Karte ragt in den Kopfbereich ---------- */
-.home-trust {
-  position: relative;
-  z-index: 5;
-  margin-top: -4.5rem;
-}
-.home-trust-card {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 24px 60px rgba(8, 20, 44, 0.16);
-  overflow: hidden;
-}
-.home-stat {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.55rem 1.5rem;
-  transition: background-color 0.25s ease;
-}
-.home-stat + .home-stat::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 24%;
-  bottom: 24%;
-  width: 1px;
-  background: var(--border);
-}
-.home-stat:hover { background: var(--bg-subtle); }
-.home-stat-icon {
-  flex: none;
-  width: 48px;
-  height: 48px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: var(--thm-soft);
-  color: var(--thm-color);
-  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.3s ease, color 0.3s ease;
-}
-.home-stat-icon svg { width: 22px; height: 22px; }
-.home-stat:hover .home-stat-icon {
-  transform: translateY(-3px) rotate(-8deg);
-  background: var(--btn-primary-bg);
-  color: #FFFFFF;
-}
-.home-stat-num {
-  font-family: var(--font-display);
-  font-size: 1.7rem;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-.home-stat-label {
-  margin-top: 0.25rem;
-  font-size: 0.9rem;
-  line-height: 1.35;
-  color: var(--text-muted);
-}
 
 /* ---------- Angebote ---------- */
 .home-split-head {
@@ -3978,18 +3926,13 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 @media (max-width: 1180px) {
   .home-chip--b { right: 0; top: 4.6rem; }
 }
-@media (max-width: 1040px) {
-  .home-trust-card { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home-stat:nth-child(3)::before { display: none; }
-  .home-stat:nth-child(n+3) { border-top: 1px solid var(--border); }
-}
 
 @media (max-width: 860px) {
   /* Smartphone/Tablet: Luftbild oben frei sichtbar, Text darunter auf dunklem Grund */
   .home-hero {
     display: block;
     min-height: 0;
-    padding: 0 0 5.25rem;
+    padding: 0 0 3rem;
   }
   .home-hero-media {
     position: relative;
@@ -4027,9 +3970,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
     gap: 0.5rem;
     display: none;
   }
-  .home-chip,
-  .home-qr { position: static; translate: none; }
-  .home-qr { display: none; }
+  .home-chip { position: static; translate: none; }
   .home-chip-in {
     gap: 0.55rem;
     padding: 0.45rem 0.8rem 0.45rem 0.5rem;
@@ -4046,15 +3987,11 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   .home-final-card .home-cta .btn { flex: 1 1 100%; }
   .home-hero-toggle { top: 0.75rem; right: 0.75rem; bottom: auto; }
 
-  .home-trust { margin-top: -3rem; }
   .home-split-head { grid-template-columns: 1fr; margin-bottom: 2rem; }
 }
 
 @media (max-width: 520px) {
   .home-routes { grid-template-columns: 1fr; }
-  .home-stat { flex-direction: column; align-items: flex-start; gap: 0.7rem; padding: 1.15rem 1rem; }
-  .home-stat-num { font-size: 1.4rem; }
-  .home-stat-icon { width: 40px; height: 40px; border-radius: 12px; }
   .home-final-facts { flex-direction: column; align-items: center; }
 }
 
