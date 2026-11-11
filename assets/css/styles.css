@@ -3710,7 +3710,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   .home-quad { animation: home-fade 0.5s ease both; }
   .reveal-on [data-reveal] {
     transform: none;
-    transition: opacity 0.45s ease var(--reveal-delay, 0s);
+    transition: opacity 0.3s ease var(--reveal-delay, 0s);
   }
   [data-parallax] { translate: none !important; }
   .page-home .btn::after { display: none; }
@@ -3721,7 +3721,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 .motion-reduced .home-quad { animation-play-state: paused; }
 .motion-reduced.reveal-on [data-reveal] {
   transform: none;
-  transition: opacity 0.45s ease var(--reveal-delay, 0s);
+  transition: opacity 0.3s ease var(--reveal-delay, 0s);
 }
 .motion-reduced .page-home .btn::after { display: none; }
 
@@ -3998,13 +3998,13 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
 /* Abschnitte blenden beim Scrollen sanft ein (setzt main.js, nur ohne „Bewegung reduzieren") */
 .reveal-on [data-reveal] {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(18px);
   transition:
-    opacity 0.7s ease var(--reveal-delay, 0s),
-    transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s);
+    opacity 0.38s ease var(--reveal-delay, 0s),
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0s);
 }
-.reveal-on [data-reveal="left"] { transform: translateX(-36px); }
-.reveal-on [data-reveal="right"] { transform: translateX(36px); }
+.reveal-on [data-reveal="left"] { transform: translateX(-24px); }
+.reveal-on [data-reveal="right"] { transform: translateX(24px); }
 .reveal-on [data-reveal="zoom"] { transform: scale(0.95); }
 .reveal-on [data-reveal].is-revealed {
   opacity: 1;

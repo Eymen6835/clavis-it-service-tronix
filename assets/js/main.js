@@ -445,7 +445,7 @@
       if (el.hasAttribute('data-reveal-stagger')) {
         Array.prototype.forEach.call(el.children, (child, i) => {
           child.setAttribute('data-reveal', '');
-          child.style.setProperty('--reveal-delay', (Math.min(i, 6) * 0.08).toFixed(2) + 's');
+          child.style.setProperty('--reveal-delay', (Math.min(i, 6) * 0.05).toFixed(2) + 's');
           targets.push(child);
         });
       } else {
@@ -471,7 +471,7 @@
         });
         setTimeout(() => finish(el), 1800);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    }, { rootMargin: '0px 0px -2% 0px', threshold: 0.05 });
 
     root.classList.add('reveal-on');
     targets.forEach((t) => io.observe(t));
