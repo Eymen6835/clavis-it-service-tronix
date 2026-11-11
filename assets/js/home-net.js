@@ -26,8 +26,9 @@
 
   const IMG_W = 1376, IMG_H = 768;
   const TRANSITION_DURATION = 2.5; // Exakt 2,5 Sekunden für Tag->Nacht und 2,5 Sekunden für Nacht->Tag
-  const HOLD_DURATION = 1.0;       // Kurzes Verweilen bei Tag und Nacht (je 1,0s)
-  const CYCLE_DURATION = TRANSITION_DURATION * 2 + HOLD_DURATION * 2; // 7,0 Sekunden Gesamtzyklus
+  const DAY_HOLD_DURATION = 1.0;   // Kurzes Verweilen bei Tag (1,0s)
+  const NIGHT_HOLD_DURATION = 5.0; // Längeres Verweilen bei Nacht / Blauer Stunde (5,0s)
+  const CYCLE_DURATION = TRANSITION_DURATION * 2 + DAY_HOLD_DURATION + NIGHT_HOLD_DURATION; // 11,0 Sekunden Gesamtzyklus
 
   /* ---------------------------------------------------------------------
      Offscreen-WebGL-Bühne (1376 × 768) für den stufenlosen Zeitraffer-Shader
@@ -266,10 +267,10 @@
 
   function calcStateFromCycle(cycleSec) {
     const s = cycleSec % CYCLE_DURATION;
-    const t1 = HOLD_DURATION * 0.5;      // 0,5s
+    const t1 = DAY_HOLD_DURATION * 0.5;  // 0,5s
     const t2 = t1 + TRANSITION_DURATION; // 3,0s (exakt 2,5s Tag -> Nacht)
-    const t3 = t2 + HOLD_DURATION;       // 4,0s (1,0s Blaue Stunde)
-    const t4 = t3 + TRANSITION_DURATION; // 6,5s (exakt 2,5s Nacht -> Tag)
+    const t3 = t2 + NIGHT_HOLD_DURATION; // 8,0s (exakt 5,0s Nacht / Blaue Stunde)
+    const t4 = t3 + TRANSITION_DURATION; // 10,5s (exakt 2,5s Nacht -> Tag)
     if (s < t1) {
       return { progress: 0.0, direction: 1.0 };
     } else if (s < t2) {
