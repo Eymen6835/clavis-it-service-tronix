@@ -25,7 +25,9 @@
   const calm = () => (mq && mq.matches) || root.classList.contains('motion-reduced');
 
   const IMG_W = 1376, IMG_H = 768;
-  const CYCLE_DURATION = 16.0; // Symmetrischer 16-Sekunden-Zyklus (je 5,8s Hell->Dunkel & Dunkel->Hell)
+  const TRANSITION_DURATION = 2.5; // Exakt 2,5 Sekunden für Tag->Nacht und 2,5 Sekunden für Nacht->Tag
+  const HOLD_DURATION = 1.0;       // Kurzes Verweilen bei Tag und Nacht (je 1,0s)
+  const CYCLE_DURATION = TRANSITION_DURATION * 2 + HOLD_DURATION * 2; // 7,0 Sekunden Gesamtzyklus
 
   /* ---------------------------------------------------------------------
      Offscreen-WebGL-Bühne (1376 × 768) für den stufenlosen Zeitraffer-Shader
@@ -263,23 +265,27 @@
   }
 
   function calcStateFromCycle(cycleSec) {
-    const u = (cycleSec % CYCLE_DURATION) / CYCLE_DURATION;
-    if (u < 0.07) {
+    const s = cycleSec % CYCLE_DURATION;
+    const t1 = HOLD_DURATION * 0.5;      // 0,5s
+    const t2 = t1 + TRANSITION_DURATION; // 3,0s (exakt 2,5s Tag -> Nacht)
+    const t3 = t2 + HOLD_DURATION;       // 4,0s (1,0s Blaue Stunde)
+    const t4 = t3 + TRANSITION_DURATION; // 6,5s (exakt 2,5s Nacht -> Tag)
+    if (s < t1) {
       return { progress: 0.0, direction: 1.0 };
-    } else if (u < 0.43) {
-      const t = (u - 0.07) / 0.36;
+    } else if (s < t2) {
+      const t = (s - t1) / TRANSITION_DURATION;
       return { progress: t * t * (3 - 2 * t), direction: 1.0 };
-    } else if (u < 0.57) {
+    } else if (s < t3) {
       return { progress: 1.0, direction: 1.0 };
-    } else if (u < 0.93) {
-      const t = (u - 0.57) / 0.36;
+    } else if (s < t4) {
+      const t = (s - t3) / TRANSITION_DURATION;
       return { progress: 1.0 - t * t * (3 - 2 * t), direction: -1.0 };
     } else {
       return { progress: 0.0, direction: -1.0 };
     }
   }
 
-  let simTime = 1.2; // Startet direkt am Beginn des sanften Übergangs
+  let simTime = 0.5; // Startet direkt am Beginn des 2,5s-Übergangs
   let ready = false;
 
   function draw() {
