@@ -3485,7 +3485,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   transform: translateY(-3px);
   box-shadow: 0 14px 30px rgba(2, 8, 24, 0.35);
 }
-.home-route-icon {
+.home-route-icon { display: none;
   flex: none;
   width: 38px;
   height: 38px;
@@ -3496,7 +3496,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   color: #BAE6FD;
   transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
-.home-route:hover .home-route-icon {
+.home-route:hover .home-route-icon { display: none;
   transform: rotate(-8deg) scale(1.06);
   background: #FFFFFF;
   color: #0E59F2;
@@ -3518,7 +3518,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
   position: absolute;
   translate: 0 var(--py, 0px);
 }
-.home-chip--a { top: 0; right: 0; }
+.home-chip { display: none !important; } .home-chip--a { top: 0; right: 0; }
 .home-chip--b { top: 4.9rem; right: 5.5rem; }
 .home-qr { right: 0; bottom: 0; }
 
@@ -3672,7 +3672,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
       home-float 7s ease-in-out calc(var(--d, 0.9s) + 0.7s) infinite;
   }
   .home-chip--b .home-chip-in { animation-duration: 0.7s, 8.5s; }
-  .home-qr-in { animation-duration: 0.7s, 10s; }
+  .home-qr-in { animation: none !important; }
   .home-quad {
     animation:
       home-fade 1.2s ease 0.8s both,
@@ -4025,7 +4025,7 @@ p a, li a:not(.theme-btns):not(.nav-link):not(.jump-pill) {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin: -3.1rem 0 1.5rem;
+    display: none;
   }
   .home-chip,
   .home-qr { position: static; translate: none; }
